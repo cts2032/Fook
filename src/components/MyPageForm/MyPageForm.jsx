@@ -69,7 +69,7 @@ const MyPageForm = () => {
                   left: "10px",
                 }}
               >
-                이력 관리
+                내 글 보기
               </span>
             </span>
           </InfoButton>

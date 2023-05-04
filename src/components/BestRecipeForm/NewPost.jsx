@@ -77,13 +77,13 @@ const NewPost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem("id")) {
-      navigate("/login");
-      alert("로그인 후 이용가능합니다.");
-      return;
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("id")) {
+  //     navigate("/login");
+  //     alert("로그인 후 이용가능합니다.");
+  //     return;
+  //   }
+  // }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -52,13 +52,13 @@ const NewQuestion = () => {
   const [create_date, setCreate_date] = useState("");
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem("id")) {
-      navigate("/login");
-      alert("로그인 후 이용가능합니다.");
-      return;
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("id")) {
+  //     navigate("/login");
+  //     alert("로그인 후 이용가능합니다.");
+  //     return;
+  //   }
+  // }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
