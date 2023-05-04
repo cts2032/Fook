@@ -34,7 +34,7 @@ export const Img = styled.img`
   width: 500px;
   height: 300px;
   margin-left: 180px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 export const Date = styled.div`
@@ -69,7 +69,7 @@ const ViewPost = () => {
         </div>
         <div style={{ textAlign: "center" }}>내용~~~~~~~~~~~~</div>
         <Date>
-          <div>2023.05.02</div>
+          <div>2023.05.03</div>
         </Date>
       </Content>
       <LikeContainer>
