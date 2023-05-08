@@ -24,6 +24,12 @@ const MyPageForm = () => {
     setInfoBoxContent(content);
   };
 
+  const onClickHandler = () => {
+    localStorage.clear();
+    alert("로그아웃 성공");
+    navigate("/");
+  };
+
   return (
     <>
       <SideMenus>
@@ -88,7 +94,7 @@ const MyPageForm = () => {
               </span>
             </span>
           </InfoButton>
-          <InfoButton>
+          <InfoButton onClick={onClickHandler}>
             <span class="material-symbols-outlined">
               logout
               <span
