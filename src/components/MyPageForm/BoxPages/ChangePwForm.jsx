@@ -31,7 +31,7 @@ const ChangePwForm = () => {
     console.log("New Password:", newPassword);
     console.log("Confirm Password:", confirmPassword);
 
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
