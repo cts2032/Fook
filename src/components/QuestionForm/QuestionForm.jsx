@@ -15,7 +15,7 @@ const QuestionForm = () => {
           </Link>
         </div>
       </Header>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="m">
         <thead>
           <tr>
             <th>no.</th>

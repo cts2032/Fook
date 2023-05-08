@@ -3,27 +3,18 @@ import { Table } from "react-bootstrap";
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 670px;
-  width: 800px;
-  padding: 10px;
+  margin: 0 auto;
+  max-width: 900px;
+  height: 900px;
+  padding: 20px;
+  /* margin-bottom: 100px; */
 `;
 
 export const Header = styled.div`
   width: 100%;
-  height: 40px;
+  height: 45px;
   padding: 10px;
-  margin-bottom: 10px;
-`;
-
-export const Button = styled.button`
-  border: none;
-  background-color: transparent;
-  color: black;
-  font-size: 14px;
-  cursor: pointer;
-  &:hover {
-    font-weight: bold;
-  }
+  margin-bottom: 20px;
 `;
 
 const ViewForm = () => {
@@ -32,7 +23,7 @@ const ViewForm = () => {
       <Header>
         <h3>내가 작성한 글</h3>
       </Header>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="m">
         <thead>
           <tr>
             <th>no.</th>

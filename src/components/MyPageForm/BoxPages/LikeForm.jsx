@@ -7,14 +7,14 @@ import styled from "styled-components";
 export const Container = styled.div`
   margin: 0 auto;
   max-width: 900px;
-  height: 670px;
+  height: 900px;
   padding: 20px;
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
 `;
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 20px;
+  height: 40px;
   align-items: center;
 `;
 
@@ -25,16 +25,15 @@ export const Title = styled.h3`
 export const PostContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 580px;
+  height: 800px;
   justify-content: left;
   margin-top: 20px;
 `;
 
 export const Post = styled.div`
-  width: 200px;
-  height: 280px;
-  margin-bottom: 20px;
-  margin-right: 25px;
+  width: 252px;
+  height: 370px;
+  margin-top: 15px;
   margin-left: 25px;
 `;
 

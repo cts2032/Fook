@@ -8,7 +8,7 @@ const NoticeForm = () => {
   return (
     <Container>
       <Header>
-        <h2 style={{ margin: "15px" }}>공지사항</h2>
+        <h2 style={{ marginLeft: "15px", marginBottom: "30px" }}>공지사항</h2>
       </Header>
       <Table striped bordered hover size="sm">
         <thead>
@@ -39,74 +39,61 @@ const NoticeForm = () => {
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>4</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>5</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>6</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>7</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>8</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>9</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>10</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>11</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
           <tr>
-            <td>3</td>
+            <td>12</td>
             <td>안녕하세요.</td>
             <td>admin</td>
             <td>2023/04/26</td>
           </tr>
         </tbody>
       </Table>
-      {/* <ReactPaginate
-        pageCount={12}
-        pageRangeDisplayed={10}
-        marginPagesDisplayed={0}
-        breakLabel={""}
-        previousLabel={"이전"}
-        nextLabel={"다음"}
-        onPageChange={changePage}
-        containerClassName={"pagination-ul"}
-        activeClassName={"currentPage"}
-        previousClassName={"pageLabel-btn"}
-        nextClassName={"pageLabel-btn"}
-      /> */}
     </Container>
   );
 };
