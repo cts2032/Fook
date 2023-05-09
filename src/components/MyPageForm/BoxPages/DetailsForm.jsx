@@ -12,6 +12,17 @@ const DetailsForm = () => {
   const [phonenumber, setPhonenumber] = useState("");
   const [birth, setBirth] = useState("");
 
+  // useEffect(() => {
+  //   axios
+  //     .get(`${apiServer}/api/user/${localStorage.getItem("id")}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("id:", username);
@@ -20,14 +31,28 @@ const DetailsForm = () => {
     console.log("phone:", phonenumber);
     console.log("birth:", birth);
 
+    //   try {
+    //     const response = await axios.put(`${apiServer}/~~~`, {
+    //       username,
+    //       name,
+    //       email,
+    //       phonenumber,
+    //       birth,
+    //     });
+    //     alert("수정 성공");
+    //     Navigate("/mypage");
+    //     console.log(response);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    const updateUser = { name, birth, email, phonenumber };
     try {
-      const response = await axios.put(`${apiServer}/~~~`, {
-        username,
-        name,
-        email,
-        phonenumber,
-        birth,
-      });
+      const response = await axios.patch(
+        `${apiServer}/api/user/${localStorage.getItem("id")}?name=${username}`,
+
+        updateUser
+      );
       alert("수정 성공");
       Navigate("/mypage");
       console.log(response);
@@ -35,59 +60,51 @@ const DetailsForm = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="container">
       <h1>내 정보</h1>
       <Form>
-        {/* <Form onSubmit={handleSubmit}> */}
-        <Form.Group className="mb-3" controlId="formBasicId">
-          <Form.Label>ID</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicNickname">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicNickname">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPhone">
+            <Form.Label>Phone number</Form.Label>
+            <Form.Control
+              type="text"
+              value={phonenumber}
+              onChange={(e) => setPhonenumber(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPhone">
-          <Form.Label>Phone number</Form.Label>
-          <Form.Control
-            type="text"
-            value={phonenumber}
-            onChange={(e) => setPhonenumber(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicAddress">
-          <Form.Label>Birth</Form.Label>
-          <Form.Control
-            type="text"
-            value={birth}
-            onChange={(e) => setBirth(e.target.value)}
-          />
-        </Form.Group>
-
-        <Button type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
+          <Form.Group className="mb-3" controlId="formBasicAddress">
+            <Form.Label>Birth</Form.Label>
+            <Form.Control
+              type="text"
+              value={birth}
+              onChange={(e) => setBirth(e.target.value)}
+            />
+          </Form.Group>
+          <Button type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </Form>
       </Form>
     </div>
   );

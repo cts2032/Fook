@@ -50,6 +50,6 @@ export const InfoBox = styled.div`
   margin: auto;
   border: none;
   width: 1000px;
-  height: 900px;
+  height: 700px;
   /* box-shadow: 1px 2px 2px 2px gray; */
 `;

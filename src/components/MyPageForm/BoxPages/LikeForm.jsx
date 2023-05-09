@@ -9,7 +9,7 @@ export const Container = styled.div`
   max-width: 900px;
   height: 900px;
   padding: 20px;
-  /* margin-bottom: 100px; */
+  /* margin-bottom: 300px; */
 `;
 export const Header = styled.div`
   display: flex;

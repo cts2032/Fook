@@ -13,21 +13,21 @@ import apiServer from "../../../api/api";
 import { Warning } from "../../RegisterForm/RegisterSty";
 
 const ChangePwForm = () => {
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordOk, setNewPasswordOk] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const containsSpecialCharacter = (password) => {
+  const containsSpecialCharacter = (newPassword) => {
     const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    return specialCharacterRegex.test(password);
+    return specialCharacterRegex.test(newPassword);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Password:", password);
+    // console.log("Password:", password);
     console.log("New Password:", newPassword);
     console.log("Confirm Password:", confirmPassword);
 
@@ -56,13 +56,13 @@ const ChangePwForm = () => {
     <Container>
       <Form onSubmit={handleSubmit}>
         <Header>비밀번호 변경</Header>
-        <Input
+        {/* <Input
           type="password"
           placeholder="현재 비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        />
+        /> */}
         <Input
           type="password"
           placeholder="새 비밀번호"

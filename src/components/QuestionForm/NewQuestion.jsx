@@ -11,7 +11,8 @@ export const WriteContainer = styled.div`
   height: 600px;
   margin: 0 auto;
   box-shadow: 1px 5px 15px 5px lightgray;
-  margin-top: 30px;
+  margin-top: 70px;
+  margin-bottom: 300px;
   padding: 20px;
   input {
     width: 850px;
@@ -46,10 +47,11 @@ export const Button = styled.button`
 
 const NewQuestion = () => {
   const quillRef = useRef();
-  const [id, setId] = useState("");
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
-  const [create_date, setCreate_date] = useState("");
+  const [create_date, setCreate_date] = useState(new Date());
+  const now = new Date();
+  const formattedDate = now.toISOString();
 
   const navigate = useNavigate();
   // useEffect(() => {
@@ -64,6 +66,7 @@ const NewQuestion = () => {
     e.preventDefault();
     console.log("제목: ", subject);
     console.log("내용: ", content);
+    console.log("날짜: ", formattedDate);
 
     if (subject === "") {
       alert("제목을 작성해주세요.");
@@ -75,8 +78,7 @@ const NewQuestion = () => {
     }
 
     try {
-      const response = await axios.post(`${apiServer}/~~~`, {
-        id,
+      const response = await axios.post(`${apiServer}/api/board/createboard`, {
         subject,
         content,
         create_date,
@@ -87,6 +89,8 @@ const NewQuestion = () => {
     } catch (error) {
       console.log(error);
     }
+
+    setCreate_date(new Date());
   };
 
   const modules = useMemo(() => {
@@ -131,6 +135,7 @@ const NewQuestion = () => {
           style={{ margin: "0" }}
           onClick={handleSubmit}
         >
+          <input type="hidden" value={create_date} onChange={setCreate_date} />
           업로드하기
         </Button>{" "}
       </ButtonContainer>
