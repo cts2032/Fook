@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../Image/fook_logo3.png";
 import { Button } from "../NavBar/NavBarSty";
 import { BnContainer, Brand, LButtonBox, RButtonBox } from "./BotNavSty";
+import axios from "axios";
+import apiServer from "../../api/api";
+import { setToken } from "./../../Auth";
 
 const BotNav = () => {
   const navigate = useNavigate();
@@ -13,6 +16,14 @@ const BotNav = () => {
   // };
   const onClickMy = () => {
     navigate(`/mypage`);
+  };
+
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("id");
+    alert("로그아웃 성공");
+    navigate("/login");
   };
 
   return (
@@ -34,12 +45,19 @@ const BotNav = () => {
         </LButtonBox>
 
         <RButtonBox>
-          <Link to="/login">
-            <Button>
-              <span class="material-symbols-outlined">login</span>
-              <span>Login</span>
+          {localStorage.getItem("id") === null ? (
+            <Link to="/login">
+              <Button>
+                <span class="material-symbols-outlined">login</span>
+                <span>Login</span>
+              </Button>
+            </Link>
+          ) : (
+            <Button onClick={handleLogout}>
+              <span class="material-symbols-outlined">logout</span>
+              <span>Logout</span>
             </Button>
-          </Link>
+          )}
         </RButtonBox>
       </BnContainer>
     </>
