@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.971344e8.css",
+    "main.js": "/static/js/main.1d14419c.js",
+    "static/js/787.ec704a7a.chunk.js": "/static/js/787.ec704a7a.chunk.js",
+    "static/media/main3.jpg": "/static/media/main3.42ab36c292471308a9d1.jpg",
+    "static/media/pizza.jpg": "/static/media/pizza.1fabae84030991d89748.jpg",
+    "static/media/fook_logo3.png": "/static/media/fook_logo3.a35b24d9c160db970b5e.png",
+    "index.html": "/index.html",
+    "main.971344e8.css.map": "/static/css/main.971344e8.css.map",
+    "main.1d14419c.js.map": "/static/js/main.1d14419c.js.map",
+    "787.ec704a7a.chunk.js.map": "/static/js/787.ec704a7a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.971344e8.css",
+    "static/js/main.1d14419c.js"
+  ]
+}
