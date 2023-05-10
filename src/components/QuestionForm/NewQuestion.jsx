@@ -96,8 +96,6 @@ const NewQuestion = () => {
     } catch (error) {
       console.log(error);
     }
-    // setUsername(ID);
-    // setCreate_date(new Date());
   };
 
   const modules = useMemo(() => {

@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Header, NewQuestionBtn } from "./QuestionFormSty";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import axios from "axios";
+import apiServer from "../../api/api";
 // import ReactPaginate from "react-paginate";
 
 const QuestionForm = () => {
+  const [boarditem, setBoardItem] = useState([]);
+  useEffect(() => {
+    try {
+      axios.get(`${apiServer}/api/board/getboard`).then((response) => {
+        const data = response.data;
+        console.log(data);
+        setBoardItem(response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <Container>
       <Header>
@@ -26,76 +40,34 @@ const QuestionForm = () => {
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>영상이 안 떠요!</td>
-            <td>aaa</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>회원 수정은 어디서 하나요?</td>
-            <td>bbb</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
+            <td>
+              {boarditem.map((item) => (
+                <ul>
+                  <li key={item.id}>{item.id}</li>
+                </ul>
+              ))}
+            </td>
+            <td>
+              {boarditem.map((item) => (
+                <ul>
+                  <li key={item.id}>{item.subject}</li>
+                </ul>
+              ))}
+            </td>
+            <td>
+              {boarditem.map((item) => (
+                <ul>
+                  <li key={item.id}>{item.username}</li>
+                </ul>
+              ))}
+            </td>
+            <td>
+              {boarditem.map((item) => (
+                <ul>
+                  <li key={item.id}>{item.create_date}</li>
+                </ul>
+              ))}
+            </td>
           </tr>
         </tbody>
       </Table>

@@ -28,8 +28,8 @@ function App() {
         <Route path="/best/view" element={<ViewPost />} />
         <Route path="/best/newpost" element={<NewPost />} />
         <Route path="/best" element={<BestRecipeForm />} />
-        {/* <Route path="/mypage/:name" element={<MyPageForm />} /> */}
-        <Route path="/mypage" element={<MyPageForm />} />
+        <Route path="/mypage/:name" element={<MyPageForm />} />
+        {/* <Route path="/mypage" element={<MyPageForm />} /> */}
         <Route path="/signup" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/" element={<HomePageForm />} />
