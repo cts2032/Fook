@@ -46,24 +46,32 @@ export const Button = styled.button`
 `;
 
 const NewPost = () => {
+  const ID = String(localStorage.getItem("id"));
   const quillRef = useRef();
-  const [title, setTitle] = useState("");
+  const [username, setUsername] = useState(ID);
+  const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
+  const [create_date, setCreate_date] = useState(new Date());
+  const now = new Date();
+  const formattedDate = now.toISOString();
+
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("id")) {
-  //     navigate("/login");
-  //     alert("로그인 후 이용가능합니다.");
-  //     return;
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      navigate("/login");
+      alert("로그인 후 이용가능합니다.");
+      return;
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("제목: ", title);
+    console.log("작성자: ", username);
+    console.log("제목: ", subject);
     console.log("내용: ", content);
+    console.log("날짜: ", formattedDate);
 
-    if (title === "") {
+    if (subject === "") {
       alert("제목을 작성해주세요.");
       return;
     }
@@ -74,8 +82,10 @@ const NewPost = () => {
 
     try {
       const response = await axios.post(`${apiServer}/~~~`, {
-        title,
+        username,
+        subject,
         content,
+        create_date,
       });
       alert("게시물 등록 성공");
       navigate("/best");
@@ -83,6 +93,8 @@ const NewPost = () => {
     } catch (error) {
       console.log(error);
     }
+    // setUsername(ID);
+    // setCreate_date(new Date());
   };
 
   const modules = useMemo(() => {
@@ -107,9 +119,9 @@ const NewPost = () => {
     <WriteContainer onSubmit>
       <input
         placeholder="제목을 입력해주세요."
-        value={title}
+        value={subject}
         type="text"
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => setSubject(e.target.value)}
       ></input>
       <ReactQuill
         style={{ width: "850px", height: "430px", marginBottom: "50px" }}
@@ -120,11 +132,13 @@ const NewPost = () => {
         value={content}
         onChange={setContent}
       ></ReactQuill>
+      <input type="hidden" value={username} onChange={setUsername} />
+      <input type="hidden" value={create_date} onChange={setCreate_date} />
       <ButtonContainer>
         <Button
           type="submit"
           variant="success"
-          style={{ margin: "0", marginLeft: "30px" }}
+          style={{ margin: "0" }}
           onClick={handleSubmit}
         >
           업로드하기

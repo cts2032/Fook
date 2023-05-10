@@ -12,17 +12,6 @@ const DetailsForm = () => {
   const [phonenumber, setPhonenumber] = useState("");
   const [birth, setBirth] = useState("");
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${apiServer}/api/user/${localStorage.getItem("id")}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("id:", username);
@@ -31,21 +20,6 @@ const DetailsForm = () => {
     console.log("phone:", phonenumber);
     console.log("birth:", birth);
 
-    //   try {
-    //     const response = await axios.put(`${apiServer}/~~~`, {
-    //       username,
-    //       name,
-    //       email,
-    //       phonenumber,
-    //       birth,
-    //     });
-    //     alert("수정 성공");
-    //     Navigate("/mypage");
-    //     console.log(response);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
     const updateUser = { name, birth, email, phonenumber };
     try {
       const response = await axios.patch(
@@ -60,7 +34,6 @@ const DetailsForm = () => {
       console.log(error);
     }
   };
-
   return (
     <div className="container">
       <h1>내 정보</h1>

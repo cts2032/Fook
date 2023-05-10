@@ -46,7 +46,9 @@ export const Button = styled.button`
 `;
 
 const NewQuestion = () => {
+  const ID = String(localStorage.getItem("id"));
   const quillRef = useRef();
+  const [username, setUsername] = useState(ID);
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [create_date, setCreate_date] = useState(new Date());
@@ -54,16 +56,17 @@ const NewQuestion = () => {
   const formattedDate = now.toISOString();
 
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("id")) {
-  //     navigate("/login");
-  //     alert("로그인 후 이용가능합니다.");
-  //     return;
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      navigate("/login");
+      alert("로그인 후 이용가능합니다.");
+      return;
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("작성자: ", username);
     console.log("제목: ", subject);
     console.log("내용: ", content);
     console.log("날짜: ", formattedDate);
@@ -78,19 +81,21 @@ const NewQuestion = () => {
     }
 
     try {
-      const response = await axios.post(`${apiServer}/api/board/createboard`, {
-        subject,
-        content,
-        create_date,
-      });
+      const response = await axios.post(
+        `${apiServer}/api/board/${localStorage.getItem("id")}/createboard`,
+        {
+          username,
+          subject,
+          content,
+          create_date,
+        }
+      );
       alert("질문 등록 성공");
       navigate("/q&a");
       console.log(response);
     } catch (error) {
       console.log(error);
     }
-
-    setCreate_date(new Date());
   };
 
   const modules = useMemo(() => {
@@ -128,6 +133,8 @@ const NewQuestion = () => {
         value={content}
         onChange={setContent}
       ></ReactQuill>
+      <input type="hidden" value={username} onChange={setUsername} />
+      <input type="hidden" value={create_date} onChange={setCreate_date} />
       <ButtonContainer>
         <Button
           type="submit"
@@ -135,7 +142,6 @@ const NewQuestion = () => {
           style={{ margin: "0" }}
           onClick={handleSubmit}
         >
-          <input type="hidden" value={create_date} onChange={setCreate_date} />
           업로드하기
         </Button>{" "}
       </ButtonContainer>

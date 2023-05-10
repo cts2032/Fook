@@ -14,6 +14,7 @@ import AIForm from "./components/AIForm/AIForm";
 import NoticeForm from "./components/NoticeForm/NoticeForm";
 import ViewPost from "./components/BestRecipeForm/ViewPost";
 import AIRecommend from "./components/AIForm/AIRecommend";
+import QuestionDetail from "./components/QuestionForm/QuestionDetail";
 
 function App() {
   return (
@@ -24,12 +25,13 @@ function App() {
         <Route path="/ai/rec" element={<AIRecommend />} />
         <Route path="/ai" element={<AIForm />} />
         <Route path="/q&a/newpost" element={<NewQuestion />} />
+        <Route path="/q&a/detail/:idx" element={<QuestionDetail />} />
         <Route path="/q&a" element={<QuestionForm />} />
         <Route path="/best/view" element={<ViewPost />} />
         <Route path="/best/newpost" element={<NewPost />} />
         <Route path="/best" element={<BestRecipeForm />} />
-        {/* <Route path="/mypage/:name" element={<MyPageForm />} /> */}
-        <Route path="/mypage" element={<MyPageForm />} />
+        <Route path="/mypage/:name" element={<MyPageForm />} />
+        {/* <Route path="/mypage" element={<MyPageForm />} /> */}
         <Route path="/signup" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/" element={<HomePageForm />} />

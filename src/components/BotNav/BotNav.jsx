@@ -4,19 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../Image/fook_logo3.png";
 import { Button } from "../NavBar/NavBarSty";
 import { BnContainer, Brand, LButtonBox, RButtonBox } from "./BotNavSty";
-import axios from "axios";
-import apiServer from "../../api/api";
-import { setToken } from "./../../Auth";
 
 const BotNav = () => {
   const navigate = useNavigate();
 
-  // const onClickMy = () => {
-  //   navigate(`/mypage/${localStorage.getItem("id")}`);
-  // };
   const onClickMy = () => {
-    navigate(`/mypage`);
+    if (!localStorage.getItem("id")) {
+      navigate("/login");
+      alert("로그인 후 이용가능합니다.");
+      return;
+    } else navigate(`/mypage/${localStorage.getItem("id")}`);
   };
+  // const onClickMy = () => {
+  //   navigate(`/mypage`);
+  // };
 
   const handleLogout = async (event) => {
     event.preventDefault();

@@ -13,37 +13,43 @@ import apiServer from "../../../api/api";
 import { Warning } from "../../RegisterForm/RegisterSty";
 
 const ChangePwForm = () => {
-  const [newPassword, setNewPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [currentpassword, setCurrentpassword] = useState("");
   const [newPasswordOk, setNewPasswordOk] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const containsSpecialCharacter = (newPassword) => {
+  const containsSpecialCharacter = (password) => {
     const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    return specialCharacterRegex.test(newPassword);
+    return specialCharacterRegex.test(password);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("New Password:", newPassword);
+
+    console.log("New Password:", password);
     console.log("Confirm Password:", confirmPassword);
 
-    if (newPassword !== confirmPassword) {
+    if (password !== confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    if (!containsSpecialCharacter(newPassword)) {
+    if (!containsSpecialCharacter(password)) {
       alert("비밀번호에는 최소 1개의 특수 문자가 포함되어야 합니다.");
       return;
     }
 
     try {
-      const response = await axios.put(`${apiServer}/api/user/~~~`, {
-        newPassword,
-      });
+      const response = await axios.patch(
+        `${apiServer}/api/user/updatepw/${localStorage.getItem("id")}`,
+        {
+          password,
+        }
+      );
       alert("비밀번호 변경 성공");
-      navigate("/login");
+      navigate("/");
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -57,9 +63,9 @@ const ChangePwForm = () => {
         <Input
           type="password"
           placeholder="새 비밀번호"
-          value={newPassword}
+          value={password}
           onChange={(e) => {
-            setNewPassword(e.target.value);
+            setPassword(e.target.value);
             if (containsSpecialCharacter(e.target.value)) {
               setNewPasswordOk(true);
             } else {

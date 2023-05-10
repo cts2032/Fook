@@ -1,6 +1,10 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Table } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
+import apiServer from "../../../api/api";
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -18,6 +22,20 @@ export const Header = styled.div`
 `;
 
 const ViewForm = () => {
+  const [myitem, setMyItem] = useState([]);
+  useEffect(() => {
+    try {
+      axios
+        .get(`${apiServer}/api/board/detail/${localStorage.getItem("id")}`)
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          setMyItem(response.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <Container>
       <Header>
@@ -33,78 +51,14 @@ const ViewForm = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>영상이 안 떠요!</td>
-            <td>aaa</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>회원 수정은 어디서 하나요?</td>
-            <td>bbb</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>aaa</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>안녕하세요.</td>
-            <td>ccc</td>
-            <td>2023/04/26</td>
-          </tr>
+          {myitem.map((item) => (
+            <tr rkey={item.id}>
+              <td>{item.id}</td>
+              <td>{item.subject}</td>
+              <td>{item.username}</td>
+              <td>{item.create_date.split("T").shift()}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </Container>

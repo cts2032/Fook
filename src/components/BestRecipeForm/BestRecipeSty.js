@@ -21,7 +21,7 @@ export const Title = styled.h2`
 export const NewPostButton = styled.button`
   border: none;
   background-color: transparent;
-  color: #c7e8ca;
+  color: black;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
