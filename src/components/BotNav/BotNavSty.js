@@ -25,18 +25,17 @@ export const BnContainer = styled.div`
 export const LButtonBox = styled.div`
   height: 80px;
   width: 50%;
+  margin-right: 1.8px;
   border: none;
   border-top-right-radius: 50px;
   box-shadow: 1px 10px 10px 5px gray;
   background-color: white;
-  z-index: 1;
 `;
 export const RButtonBox = styled.div`
   height: 80px;
   width: 50%;
   border: none;
   border-top-left-radius: 50px;
-  box-shadow: -1px 10px 10px 5px gray;
+  box-shadow: 1px 10px 10px 5px gray;
   background-color: white;
-  z-index: 1;
 `;

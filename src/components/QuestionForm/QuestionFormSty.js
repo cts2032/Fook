@@ -18,7 +18,7 @@ export const Header = styled.div`
 export const NewQuestionBtn = styled.button`
   border: none;
   background-color: transparent;
-  color: #c7e8ca;
+  color: black;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import axios from "axios";
 import apiServer from "../../api/api";
+import ReactPaginate from "react-paginate";
 // import ReactPaginate from "react-paginate";
 
 const QuestionForm = () => {
@@ -39,36 +40,14 @@ const QuestionForm = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              {boarditem.map((item) => (
-                <ul>
-                  <li key={item.id}>{item.id}</li>
-                </ul>
-              ))}
-            </td>
-            <td>
-              {boarditem.map((item) => (
-                <ul>
-                  <li key={item.id}>{item.subject}</li>
-                </ul>
-              ))}
-            </td>
-            <td>
-              {boarditem.map((item) => (
-                <ul>
-                  <li key={item.id}>{item.username}</li>
-                </ul>
-              ))}
-            </td>
-            <td>
-              {boarditem.map((item) => (
-                <ul>
-                  <li key={item.id}>{item.create_date}</li>
-                </ul>
-              ))}
-            </td>
-          </tr>
+          {boarditem.map((item) => (
+            <tr rkey={item.id}>
+              <td>{item.id}</td>
+              <td>{item.subject}</td>
+              <td>{item.username}</td>
+              <td>{item.create_date.split("T").shift()}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
       {/* <ReactPaginate

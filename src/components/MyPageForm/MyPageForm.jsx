@@ -7,18 +7,19 @@ import ViewForm from "./BoxPages/ViewForm";
 import LikeForm from "./BoxPages/LikeForm";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DeleteForm from "./BoxPages/DeleteForm";
 
 const MyPageForm = () => {
   const [infoBoxContent, setInfoBoxContent] = useState(<DetailsForm />);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("id")) {
-  //     navigate("/login");
-  //     alert("로그인 후 이용가능합니다.");
-  //     return;
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      navigate("/login");
+      alert("로그인 후 이용가능합니다.");
+      return;
+    }
+  }, [navigate]);
 
   const handleButtonClick = (content) => {
     setInfoBoxContent(content);
@@ -88,7 +89,7 @@ const MyPageForm = () => {
               </span>
             </span>
           </InfoButton>
-          <InfoButton>
+          <InfoButton onClick={() => handleButtonClick(<DeleteForm />)}>
             <span class="material-symbols-outlined">
               waving_hand
               <span
