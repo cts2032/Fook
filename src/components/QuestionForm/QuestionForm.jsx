@@ -5,7 +5,17 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 import apiServer from "../../api/api";
 import QuestionDetail from "./QuestionDetail";
+import styled from "styled-components";
 // import ReactPaginate from "react-paginate";
+
+export const Detail = styled(Link)`
+  text-decoration-line: none;
+  color: black;
+  &:hover {
+    color: black;
+    font-weight: 700;
+  }
+`;
 
 const QuestionForm = () => {
   const [boarditem, setBoardItem] = useState([]);
@@ -46,7 +56,7 @@ const QuestionForm = () => {
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>
-                <Link to={`/q&a/detail/${item.id}`}>{item.subject}</Link>
+                <Detail to={`/q&a/detail/${item.id}`}>{item.subject}</Detail>
               </td>
               <td>{item.username}</td>
               <td>{item.create_date.split("T").shift()}</td>

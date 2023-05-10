@@ -13,37 +13,34 @@ export const ViewContainer = styled.div`
   box-shadow: 1px 5px 15px 5px lightgray;
   margin-top: 30px;
   padding: 20px;
-  input {
+  /* input {
     width: 850px;
     height: 40px;
     background-color: transparent;
     border: 1px solid lightgray;
     outline: none;
-  }
+    border: 1px solid red;
+  } */
 `;
 
 export const Header = styled.div`
   width: 100%;
-  height: 37px;
+  height: 45px;
   text-align: center;
+  font-size: 30px;
   margin-bottom: 15px;
 `;
 
 export const Content = styled.div`
   width: 100%;
-  height: 490px;
-`;
-
-export const Img = styled.img`
-  width: 500px;
-  height: 300px;
-  margin-left: 180px;
-  margin-bottom: 10px;
+  height: 460px;
+  margin-bottom: 15px;
+  text-align: center;
 `;
 
 export const Date = styled.div`
-  margin-top: 120px;
   margin-left: 700px;
+  height: 30px;
   text-align: center;
 `;
 
@@ -79,11 +76,13 @@ const QuestionDetail = () => {
 
   return (
     <ViewContainer>
-      {/* <h3>{boarditem.subject}</h3> */}
-
-      <div>내용</div>
-
-      <div>날짜</div>
+      {boarditem.map((item) => (
+        <div key={item.id}>
+          <Header>{item.subject}</Header>
+          <Content>{item.username}</Content>
+          <Date>{item.create_date.split("T").shift()}</Date>
+        </div>
+      ))}
 
       {/* <LikeContainer>
         <span class="material-icons">favorite_border</span>
