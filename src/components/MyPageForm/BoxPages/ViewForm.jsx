@@ -5,6 +5,7 @@ import { Table } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import apiServer from "../../../api/api";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -19,6 +20,15 @@ export const Header = styled.div`
   height: 45px;
   padding: 10px;
   margin-bottom: 20px;
+`;
+
+export const Detail = styled(Link)`
+  text-decoration-line: none;
+  color: black;
+  &:hover {
+    color: #5d9c59;
+    font-weight: 700;
+  }
 `;
 
 const ViewForm = () => {
@@ -54,11 +64,27 @@ const ViewForm = () => {
           {myitem.map((item) => (
             <tr rkey={item.id}>
               <td>{item.id}</td>
-              <td>{item.subject}</td>
+              <td>
+                <Detail
+                  to={`/mypage/${localStorage.getItem("id")}/detail/${item.id}`}
+                >
+                  {item.subject}
+                </Detail>
+              </td>
               <td>{item.username}</td>
               <td>{item.create_date.split("T").shift()}</td>
             </tr>
           ))}
+          <tr>
+            <td>d</td>
+            <td>
+              <Detail to={`/mypage/${localStorage.getItem("id")}/detail`}>
+                d
+              </Detail>
+            </td>
+            <td>d</td>
+            <td>d</td>
+          </tr>
         </tbody>
       </Table>
     </Container>

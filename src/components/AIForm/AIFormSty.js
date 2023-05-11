@@ -11,38 +11,27 @@ export const Container = styled.div`
 
 export const SearchContainer = styled.div`
   width: 800px;
-  height: 40px;
-  margin-top: 200px;
+  height: 200px;
+  margin-top: 50px;
 `;
 
-export const Search = styled.div`
-  position: relative;
-  width: 80%;
-  height: 100%;
-  margin-left: 100px;
-  input {
-    width: 600px;
-    height: inherit;
-    padding: 4px 10px;
-    border: 1px solid black;
-    box-sizing: border-box;
-    border-radius: 5px;
-    /* outline: none; */
-    background-color: #fff;
-    color: #777;
-    font-size: 13px;
-    transition: width 0.4s;
-  }
-  .material-icons {
-    height: 24px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 5px;
-    margin: auto;
-    &:hover {
-      color: #5d9c59;
-      cursor: pointer;
-    }
+export const BtnContainer = styled.div`
+  width: 100%;
+  height: 43px;
+`;
+
+export const Button = styled.button`
+  padding: 10px;
+  width: 70px;
+  background-color: #c7e8ca;
+  color: gray;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #5d9c59;
+    color: white;
   }
 `;

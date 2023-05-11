@@ -35,7 +35,7 @@ const DeleteForm = () => {
           console.log(response);
           localStorage.removeItem("accessToken");
           localStorage.removeItem("id");
-          alert("회원삭제 완료");
+          alert("회원탈퇴 완료");
           navigate("/");
           // localStorage.setItem("username", response.data.name);
         } catch (error) {

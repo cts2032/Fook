@@ -36,7 +36,7 @@ const DetailsForm = () => {
   };
   return (
     <div className="container">
-      <h1>내 정보</h1>
+      <h1>내 정보 수정</h1>
       <Form>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicNickname">
@@ -44,6 +44,7 @@ const DetailsForm = () => {
             <Form.Control
               type="text"
               value={name}
+              placeholder="변경할 이름을 입력해주세요."
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
@@ -53,6 +54,7 @@ const DetailsForm = () => {
             <Form.Control
               type="email"
               value={email}
+              placeholder="변경할 이메일을 입력해주세요."
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
@@ -62,6 +64,7 @@ const DetailsForm = () => {
             <Form.Control
               type="text"
               value={phonenumber}
+              placeholder="변경할 전화번호를 입력해주세요."
               onChange={(e) => setPhonenumber(e.target.value)}
             />
           </Form.Group>
@@ -71,6 +74,7 @@ const DetailsForm = () => {
             <Form.Control
               type="text"
               value={birth}
+              placeholder="변경할 생일을 입력해주세요."
               onChange={(e) => setBirth(e.target.value)}
             />
           </Form.Group>

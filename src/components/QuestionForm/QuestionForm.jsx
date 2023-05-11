@@ -12,7 +12,7 @@ export const Detail = styled(Link)`
   text-decoration-line: none;
   color: black;
   &:hover {
-    color: black;
+    color: #5d9c59;
     font-weight: 700;
   }
 `;

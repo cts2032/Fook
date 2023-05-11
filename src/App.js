@@ -15,6 +15,9 @@ import NoticeForm from "./components/NoticeForm/NoticeForm";
 import ViewPost from "./components/BestRecipeForm/ViewPost";
 import AIRecommend from "./components/AIForm/AIRecommend";
 import QuestionDetail from "./components/QuestionForm/QuestionDetail";
+import ChangePwForm from "./components/MyPageForm/BoxPages/ChangePwForm";
+import MyDetail from "./components/MyPageForm/BoxPages/MyDetail";
+import EditQuestion from "./components/QuestionForm/EditQuestion";
 
 function App() {
   return (
@@ -24,12 +27,15 @@ function App() {
         <Route path="/notice" element={<NoticeForm />} />
         <Route path="/ai/rec" element={<AIRecommend />} />
         <Route path="/ai" element={<AIForm />} />
+        <Route path="/q&a/newpost/modify/:idx" element={<EditQuestion />} />
         <Route path="/q&a/newpost" element={<NewQuestion />} />
         <Route path="/q&a/detail/:idx" element={<QuestionDetail />} />
         <Route path="/q&a" element={<QuestionForm />} />
         <Route path="/best/view" element={<ViewPost />} />
         <Route path="/best/newpost" element={<NewPost />} />
         <Route path="/best" element={<BestRecipeForm />} />
+        <Route path="/mypage/:name/detail" element={<MyDetail />} />
+        {/* <Route path="/mypage/:name/detail/:idx" element={<MyDetail />} /> */}
         <Route path="/mypage/:name" element={<MyPageForm />} />
         {/* <Route path="/mypage" element={<MyPageForm />} /> */}
         <Route path="/signup" element={<RegisterForm />} />

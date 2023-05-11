@@ -45,7 +45,7 @@ export const Button = styled.button`
   }
 `;
 
-const NewQuestion = () => {
+const EditQuestion = () => {
   const ID = String(localStorage.getItem("id"));
   const quillRef = useRef();
   const [username, setUsername] = useState(ID);
@@ -81,16 +81,11 @@ const NewQuestion = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${apiServer}/api/board/${localStorage.getItem("id")}/createboard`,
-        {
-          username,
-          subject,
-          content,
-          create_date,
-        }
-      );
-      alert("질문 등록 성공");
+      const response = await axios.post(`${apiServer}/api/board/~~~~~~`, {
+        username,
+        subject,
+      });
+      alert("질문 수정 성공");
       navigate("/q&a");
       console.log(response);
     } catch (error) {
@@ -144,4 +139,4 @@ const NewQuestion = () => {
   );
 };
 
-export default NewQuestion;
+export default EditQuestion;
