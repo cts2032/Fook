@@ -1,63 +1,36 @@
 import React from "react";
-import { BtnContainer, Button, Container, SearchContainer } from "./AIFormSty";
+import { Container, SearchContainer } from "./AIFormSty";
 import axios from "axios";
 import apiServer from "../../api/api";
 import { useState } from "react";
 import styled from "styled-components";
 
+export const Button = styled.button`
+  padding: 10px;
+  width: 70px;
+  background-color: #c7e8ca;
+  color: gray;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #5d9c59;
+    color: white;
+  }
+`;
+
 const AIForm = () => {
   const [ingredient, setIngredient] = useState("");
   const [amount, setAmount] = useState("");
-  const [inputs, setInputs] = useState({
-    count: 1,
-    ingredient1: "",
-    amount1: "",
-  });
-
-  const addInput = () => {
-    const number = inputs.count + 1;
-
-    setInputs({
-      ...inputs,
-      count: number,
-      [`ingredient${number}`]: "",
-      [`amount${number}`]: "",
-    });
-  };
-
-  const deleteInput = (i) => {
-    if (inputs.count === 1) {
-      alert("하나 이상의 입력값은 필수사항입니다.");
-      return;
-    }
-
-    const newInputs = { ...inputs };
-
-    for (let n = i; n <= newInputs.count; n++) {
-      if (n === i) {
-        delete newInputs[`ingredient${n}`];
-        delete newInputs[`amount${n}`];
-      } else {
-        Object.defineProperty(
-          newInputs,
-          "ingredient" + (n - 1),
-          "amount" + (n - 1),
-          Object.getOwnPropertyDescriptor(newInputs, "ingredient" + n),
-          Object.getOwnPropertyDescriptor(newInputs, "amount" + n)
-        );
-        delete newInputs[`input${n}`];
-      }
-    }
-
-    setInputs({ ...newInputs, count: inputs.count - 1 });
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(inputs);
-    console.log("재료: ", inputs.ingredient, "양: ", inputs.amount);
+    console.log("재료: ", ingredient);
+    console.log("양: ", amount);
 
-    if (inputs.ingredient === "") {
+    if (ingredient === "") {
       alert("재료를 입력해주세요.");
       return;
     }
@@ -67,9 +40,9 @@ const AIForm = () => {
     }
 
     try {
-      const response = await axios.post(`${apiServer}/api/~~~`, {
-        ingredient: ingredient,
-        amount: amount,
+      const response = await axios.post(`${apiServer}/api/ai/predict`, {
+        ingredient,
+        amount,
       });
       alert("ai 추천 성공");
       // navigate("/");
@@ -85,7 +58,7 @@ const AIForm = () => {
         <h2>AI 추천</h2>
       </div>
       <SearchContainer>
-        {/* <input
+        <input
           type="text"
           value={ingredient}
           placeholder="재료를 입력해주세요."
@@ -96,44 +69,11 @@ const AIForm = () => {
           value={amount}
           placeholder="숫자만 입력해주세요."
           onChange={(e) => setAmount(e.target.value)}
-        /> */}
-        {inputs.count > 0 &&
-          [...Array(inputs.count)].map((item, i) => {
-            return (
-              <div key={i + 1}>
-                <input
-                  type="text"
-                  placeholder="재료를 입력해주세요."
-                  value={inputs[`ingredient${i + 1}`]}
-                  name={`ingredient${i + 1}`}
-                  onChange={(e) => {
-                    setInputs({ ...inputs, [e.target.name]: e.target.value });
-                  }}
-                />
-                <input
-                  type="text"
-                  placeholder="무게를 입력해주세요. "
-                  value={inputs[`amount${i + 1}`]}
-                  name={`amount${i + 1}`}
-                  onChange={(e) => {
-                    setInputs({ ...inputs, [e.target.name]: e.target.value });
-                  }}
-                />
-                <button
-                  onClick={() => {
-                    deleteInput(i + 1);
-                  }}
-                >
-                  삭제
-                </button>
-              </div>
-            );
-          })}
-        <button onClick={addInput}>추가</button>
+        />
+
+        <button>추가</button>
       </SearchContainer>
-      <BtnContainer>
-        <Button onClick={handleSubmit}>search</Button>
-      </BtnContainer>
+      <Button onClick={handleSubmit}>search</Button>
     </Container>
   );
 };

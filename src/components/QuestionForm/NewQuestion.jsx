@@ -55,6 +55,10 @@ const NewQuestion = () => {
   const now = new Date();
   const formattedDate = now.toISOString();
 
+  const changeContent = () => {
+    content.replace(/(<([^>]+)>)/gi, "");
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("id")) {
@@ -136,7 +140,13 @@ const NewQuestion = () => {
       <input type="hidden" value={username} onChange={setUsername} />
       <input type="hidden" value={create_date} onChange={setCreate_date} />
       <ButtonContainer>
-        <Button type="submit" onClick={handleSubmit}>
+        <Button
+          type="submit"
+          onClick={() => {
+            changeContent();
+            handleSubmit();
+          }}
+        >
           업로드하기
         </Button>
       </ButtonContainer>

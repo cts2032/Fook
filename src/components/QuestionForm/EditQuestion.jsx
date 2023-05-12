@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import apiServer from "../../api/api";
 
@@ -54,6 +54,11 @@ const EditQuestion = () => {
   const [create_date, setCreate_date] = useState(new Date());
   const now = new Date();
   const formattedDate = now.toISOString();
+  const [boarditem, setBoardItem] = useState([]);
+  const [id, setID] = useState("");
+  const location = useLocation();
+  const [currentLastUrl, setCurrentLastUrl] = useState(null);
+  console.log(location.pathname);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -62,7 +67,30 @@ const EditQuestion = () => {
       alert("로그인 후 이용가능합니다.");
       return;
     }
-  }, [navigate]);
+    const url = document.location.href;
+    const splitUrl = url.split("/");
+    const location = splitUrl[splitUrl.length - 1];
+    setCurrentLastUrl(location);
+    try {
+      axios
+        .get(
+          `${apiServer}/api/board/getboard/
+      `
+        )
+        .then((response) => {
+          const data = response.data;
+          const idx = data[location - 1];
+          console.log(response.data);
+          console.log(idx);
+          setID(location);
+          setBoardItem(response.data);
+          setSubject(idx.subject);
+          setContent(idx.content);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,11 +109,14 @@ const EditQuestion = () => {
     }
 
     try {
-      const response = await axios.post(`${apiServer}/api/board/~~~~~~`, {
-        username,
-        subject,
-        content,
-      });
+      const response = await axios.patch(
+        `${apiServer}/api/board/update/${localStorage.getItem("id")}/${id}`,
+        {
+          subject,
+          content,
+          create_date,
+        }
+      );
       alert("질문 수정 성공");
       navigate("/q&a");
       console.log(response);
@@ -114,23 +145,40 @@ const EditQuestion = () => {
 
   return (
     <WriteContainer onSubmit>
-      <input
-        placeholder="제목을 입력해주세요."
-        value={subject}
-        type="text"
-        onChange={(e) => setSubject(e.target.value)}
-      ></input>
-      <ReactQuill
-        style={{ width: "850px", height: "430px", marginBottom: "50px" }}
-        placeholder="내용을 입력해주세요. "
-        modules={modules}
-        theme="snow"
-        ref={quillRef}
-        value={content}
-        onChange={setContent}
-      ></ReactQuill>
-      <input type="hidden" value={username} onChange={setUsername} />
-      <input type="hidden" value={create_date} onChange={setCreate_date} />
+      {boarditem.map((item) => (
+        <div key={item.id} className={item.id} id={currentLastUrl}>
+          {item.id === Number(currentLastUrl) && (
+            <div>
+              <input
+                placeholder="제목을 입력해주세요."
+                value={subject}
+                type="text"
+                onChange={(e) => setSubject(e.target.value)}
+              ></input>
+              <ReactQuill
+                style={{
+                  width: "850px",
+                  height: "430px",
+                  marginBottom: "50px",
+                }}
+                placeholder="내용을 입력해주세요."
+                modules={modules}
+                theme="snow"
+                ref={quillRef}
+                value={content}
+                onChange={setContent}
+              ></ReactQuill>
+              <input type="hidden" value={username} onChange={setUsername} />
+              {/* <input type="hidden" value={id} onChange={setID()} /> */}
+              <input
+                type="hidden"
+                value={create_date}
+                onChange={setCreate_date}
+              />
+            </div>
+          )}
+        </div>
+      ))}
       <ButtonContainer>
         <Button type="submit" onClick={handleSubmit}>
           업로드하기

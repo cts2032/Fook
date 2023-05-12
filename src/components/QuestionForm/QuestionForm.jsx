@@ -52,9 +52,9 @@ const QuestionForm = () => {
           </tr>
         </thead>
         <tbody>
-          {boarditem.map((item) => (
+          {boarditem.map((item, index) => (
             <tr key={item.id}>
-              <td>{item.id}</td>
+              <td>{index + 1}</td>
               <td>
                 <Detail to={`/q&a/detail/${item.id}`}>{item.subject}</Detail>
               </td>
