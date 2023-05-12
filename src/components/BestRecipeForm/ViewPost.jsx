@@ -1,21 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import boardImg from "../Image/foodImg.jpg";
+import Comment from "./Comment";
 
 export const ViewContainer = styled.div`
   width: 900px;
-  height: 600px;
+  height: 500px;
   margin: 0 auto;
   box-shadow: 1px 5px 15px 5px lightgray;
   margin-top: 30px;
+  margin-bottom: 50px;
   padding: 20px;
-  input {
-    width: 850px;
-    height: 40px;
-    background-color: transparent;
-    border: 1px solid lightgray;
-    outline: none;
-  }
 `;
 
 export const Header = styled.div`
@@ -27,7 +22,8 @@ export const Header = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  height: 490px;
+  height: 370px;
+  text-align: center;
 `;
 
 export const Img = styled.img`
@@ -38,9 +34,34 @@ export const Img = styled.img`
 `;
 
 export const Date = styled.div`
-  margin-top: 120px;
-  margin-left: 700px;
+  width: 100%;
+  height: 30px;
+  margin-bottom: 15px;
   text-align: center;
+`;
+
+export const BtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 110px;
+  height: 33px;
+  margin-left: 750px;
+  button {
+    padding: 5px;
+    width: 50px;
+    height: 30px;
+    background-color: #c7e8ca;
+    color: gray;
+    border: none;
+    border-radius: 4px;
+    font-size: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #5d9c59;
+      color: white;
+    }
+  }
 `;
 
 export const LikeContainer = styled.div`
@@ -59,23 +80,26 @@ export const LikeContainer = styled.div`
 
 const ViewPost = () => {
   return (
-    <ViewContainer>
-      <Header>
-        <h3>제목</h3>
-      </Header>
-      <Content>
-        <div>
+    <>
+      <ViewContainer>
+        <Header>
+          <h3>제목</h3>
+        </Header>
+        <Content>
+          {/* <div>
           <Img src={boardImg} alt="img"></Img>
-        </div>
-        <div style={{ textAlign: "center" }}>내용~~~~~~~~~~~~</div>
+        </div> */}
+          <div>내용~~~~~~~~~~~~</div>
+        </Content>
         <Date>
           <div>2023.05.03</div>
         </Date>
-      </Content>
-      <LikeContainer>
+        {/* <LikeContainer>
         <span class="material-icons">favorite_border</span>
-      </LikeContainer>
-    </ViewContainer>
+      </LikeContainer> */}
+      </ViewContainer>
+      <Comment />
+    </>
   );
 };
 

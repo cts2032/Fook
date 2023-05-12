@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import apiServer from "../../api/api";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Comment from "./Comment";
 
 export const QuestionContainer = styled.div`
@@ -79,6 +79,9 @@ const QuestionDetail = () => {
   const { id } = useParams();
   const [boarditem, setBoardItem] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [currentLastUrl, setCurrentLastUrl] = useState(null);
+  console.log(location.pathname);
 
   const deleteQ = async (event) => {
     const result = window.confirm("정말로 삭제하시겠습니까?");
@@ -100,6 +103,10 @@ const QuestionDetail = () => {
   };
 
   useEffect(() => {
+    const url = document.location.href;
+    const splitUrl = url.split("/");
+    const location = splitUrl[splitUrl.length - 1];
+    setCurrentLastUrl(location);
     try {
       axios.get(`${apiServer}/api/board/getboard`).then((response) => {
         const data = response.data;
@@ -115,27 +122,26 @@ const QuestionDetail = () => {
     <>
       <QuestionContainer>
         {boarditem.map((item) => (
-          <div key={item.id}>
-            {item.username === localStorage.getItem("id") ? (
-              <BtnContainer>
-                <Link to={`/q&a/newpost/modify/${item.id}`}>
-                  <button>수정</button>
-                </Link>
-                <button onClick={deleteQ}>삭제</button>
-              </BtnContainer>
-            ) : (
-              <div style={{ marginBottom: "0" }} />
+          <div key={item.id} className={item.id} id={currentLastUrl}>
+            {item.id === Number(currentLastUrl) && (
+              <div>
+                <Header>{item.subject}</Header>
+                <Content>{item.content}</Content>
+                <Date>{item.create_date.split("T").shift()}</Date>
+                {item.username === localStorage.getItem("id") ? (
+                  <BtnContainer>
+                    <Link to={`/q&a/newpost/modify/${item.id}`}>
+                      <button>수정</button>
+                    </Link>
+                    <button onClick={deleteQ}>삭제</button>
+                  </BtnContainer>
+                ) : (
+                  <div style={{ marginBottom: "0" }} />
+                )}
+              </div>
             )}
-            <Header>{item.subject}</Header>
-            <Content>{item.content}</Content>
-            <Date>{item.create_date.split("T").shift()}</Date>
           </div>
         ))}
-        {/* <div key={boarditem.id}>
-          <Header>{boarditem.id}</Header>
-          <Content>{boarditem.id}</Content>
-          <Date>{boarditem.create_date.split("T").shift()}</Date>
-        </div> */}
         {/* <LikeContainer>
         <span class="material-icons">favorite_border</span>
       </LikeContainer> */}

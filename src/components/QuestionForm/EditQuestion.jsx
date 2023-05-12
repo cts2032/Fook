@@ -84,6 +84,7 @@ const EditQuestion = () => {
       const response = await axios.post(`${apiServer}/api/board/~~~~~~`, {
         username,
         subject,
+        content,
       });
       alert("질문 수정 성공");
       navigate("/q&a");

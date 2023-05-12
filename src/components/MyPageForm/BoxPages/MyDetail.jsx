@@ -5,19 +5,21 @@ import styled from "styled-components";
 import apiServer from "../../../api/api";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import Comment from "./Comment";
 
 export const ViewContainer = styled.div`
   width: 900px;
-  height: 600px;
+  height: 500px;
   margin: 0 auto;
   box-shadow: 1px 5px 15px 5px lightgray;
   margin-top: 30px;
+  margin-bottom: 50px;
   padding: 20px;
 `;
 
 export const Header = styled.div`
   width: 100%;
-  height: 45px;
+  height: 37px;
   text-align: center;
   font-size: 30px;
   margin-bottom: 15px;
@@ -25,15 +27,39 @@ export const Header = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  height: 460px;
-  margin-bottom: 15px;
+  height: 370px;
   text-align: center;
 `;
 
 export const Date = styled.div`
-  margin-left: 700px;
+  width: 100%;
   height: 30px;
+  margin-bottom: 15px;
   text-align: center;
+`;
+
+export const BtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 110px;
+  height: 33px;
+  margin-left: 750px;
+  button {
+    padding: 5px;
+    width: 50px;
+    height: 30px;
+    background-color: #c7e8ca;
+    color: gray;
+    border: none;
+    border-radius: 4px;
+    font-size: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #5d9c59;
+      color: white;
+    }
+  }
 `;
 
 export const LikeContainer = styled.div`
@@ -51,7 +77,7 @@ export const LikeContainer = styled.div`
 `;
 
 const MyDetail = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [myitem, setMyItem] = useState([]);
 
   useEffect(() => {
@@ -69,22 +95,25 @@ const MyDetail = () => {
   }, []);
 
   return (
-    <ViewContainer>
-      {myitem.map((item) => (
-        <div key={item.id}>
-          <Header>{item.subject}</Header>
-          <Content>{item.username}</Content>
-          <Date>{item.create_date.split("T").shift()}</Date>
-        </div>
-      ))}
-      <Header>dd</Header>
-      <Content>dd</Content>
-      <Date>2023.05.11</Date>
+    <>
+      <ViewContainer>
+        {myitem.map((item) => (
+          <div key={item.id}>
+            <Header>{item.subject}</Header>
+            <Content>{item.username}</Content>
+            <Date>{item.create_date.split("T").shift()}</Date>
+          </div>
+        ))}
+        <Header>dd</Header>
+        <Content>dd</Content>
+        <Date>2023.05.11</Date>
 
-      {/* <LikeContainer>
+        {/* <LikeContainer>
         <span class="material-icons">favorite_border</span>
       </LikeContainer> */}
-    </ViewContainer>
+      </ViewContainer>
+      <Comment />
+    </>
   );
 };
 
