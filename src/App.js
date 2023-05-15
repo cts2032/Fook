@@ -29,6 +29,7 @@ function App() {
         <Route path="/ai" element={<AIForm />} />
         <Route path="/q&a/newpost/modify/:idx" element={<EditQuestion />} />
         <Route path="/q&a/newpost" element={<NewQuestion />} />
+        {/* <Route path="/q&a/detail" element={<QuestionDetail />} /> */}
         <Route path="/q&a/detail/:idx" element={<QuestionDetail />} />
         <Route path="/q&a" element={<QuestionForm />} />
         <Route path="/best/view" element={<ViewPost />} />

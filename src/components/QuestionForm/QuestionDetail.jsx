@@ -5,12 +5,15 @@ import styled from "styled-components";
 import apiServer from "../../api/api";
 import { useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 import {
   BtnContainer,
   Button,
   Button2,
   CD,
   CommentContainer,
+  CommentLi,
+  CommentUl,
   Content,
   Header,
   Input,
@@ -35,7 +38,12 @@ const QuestionDetail = () => {
   const navigate = useNavigate();
   const [currentLastUrl, setCurrentLastUrl] = useState(null);
   const [pageid, setPageId] = useState("");
+  const [changeInput, setChangeInput] = useState("");
   // console.log(location.pathname);
+
+  const handleModify = () => {
+    setChangeInput(!changeInput);
+  };
 
   const deleteQ = async (event) => {
     const result = window.confirm("정말로 삭제하시겠습니까?");
@@ -172,7 +180,11 @@ const QuestionDetail = () => {
             {item.id === Number(currentLastUrl) && (
               <div>
                 <Header>{item.subject}</Header>
-                <Content>{item.content}</Content>
+                <Content
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(item.content),
+                  }}
+                />
                 <CD>{item.create_date.split("T").shift()}</CD>
                 {item.username === localStorage.getItem("id") ? (
                   <BtnContainer>
@@ -189,8 +201,8 @@ const QuestionDetail = () => {
           </div>
         ))}
         {/* <LikeContainer>
-        <span class="material-icons">favorite_border</span>
-      </LikeContainer> */}
+    <span class="material-icons">favorite_border</span>
+  </LikeContainer> */}
       </QuestionContainer>
       <InputContainer>
         <Input
@@ -213,23 +225,25 @@ const QuestionDetail = () => {
         <Button onClick={handleSubmit}>등록</Button>
       </InputContainer>
       <CommentContainer>
-        {commentItem.map((item) => (
-          <ul key={item.id}>
-            {Number(location) === item.pageid ? (
-              <>
-                <li className="user">{item.username}</li>
-                <li className="comment">{item.comment}</li>
-                <li className="date">{item.create_date.split("T").shift()}</li>
-                <li>{item.pri}</li>
-                <Button>답글</Button>
-                <Button>수정</Button>
-                <Button onClick={handleDelete}>삭제</Button>
-              </>
-            ) : (
-              <div></div>
-            )}
-          </ul>
-        ))}
+        {commentItem
+          .filter((item) => Number(location) === item.pageid)
+          .map((item) => (
+            <CommentUl key={item.id}>
+              <CommentLi className="user">{item.username}</CommentLi>
+              {changeInput ? (
+                <CommentLi className="comment">{item.comment}</CommentLi>
+              ) : (
+                <input type="text" />
+              )}
+              <CommentLi className="date">
+                {item.create_date.split("T").shift()}
+              </CommentLi>
+              <CommentLi>{item.pri}</CommentLi>
+              <Button>답글</Button>
+              <Button onClick={handleModify}>수정</Button>
+              <Button onClick={handleDelete}>삭제</Button>
+            </CommentUl>
+          ))}
       </CommentContainer>
     </>
   );
