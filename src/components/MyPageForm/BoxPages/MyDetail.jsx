@@ -5,7 +5,6 @@ import styled from "styled-components";
 import apiServer from "../../../api/api";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Comment from "./Comment";
 
 export const ViewContainer = styled.div`
   width: 900px;
@@ -112,7 +111,6 @@ const MyDetail = () => {
         <span class="material-icons">favorite_border</span>
       </LikeContainer> */}
       </ViewContainer>
-      <Comment />
     </>
   );
 };

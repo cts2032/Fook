@@ -61,9 +61,9 @@ const ViewForm = () => {
           </tr>
         </thead>
         <tbody>
-          {myitem.map((item) => (
-            <tr rkey={item.id}>
-              <td>{item.id}</td>
+          {myitem.map((item, idx) => (
+            <tr key={item.id}>
+              <td>{idx + 1}</td>
               <td>
                 <Detail
                   to={`/mypage/${localStorage.getItem("id")}/detail/${item.id}`}
@@ -75,16 +75,6 @@ const ViewForm = () => {
               <td>{item.create_date.split("T").shift()}</td>
             </tr>
           ))}
-          <tr>
-            <td>d</td>
-            <td>
-              <Detail to={`/mypage/${localStorage.getItem("id")}/detail`}>
-                d
-              </Detail>
-            </td>
-            <td>d</td>
-            <td>d</td>
-          </tr>
         </tbody>
       </Table>
     </Container>

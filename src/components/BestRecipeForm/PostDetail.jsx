@@ -24,11 +24,10 @@ import {
   Input2,
   InputContainer,
   LikeButton,
-  LikeContainer,
   QuestionContainer,
-} from "./QuestionSty";
+} from "../QuestionForm/QuestionSty";
 
-const QuestionDetail = () => {
+const PostDetail = () => {
   const ID = String(localStorage.getItem("id"));
   const [username, setUsername] = useState(ID);
   const [create_date, setCreate_date] = useState(new Date());
@@ -74,10 +73,9 @@ const QuestionDetail = () => {
     // 게시물 가져오기
     setCurrentLastUrl(location);
     try {
-      axios.get(`${apiServer}/api/board/getboard`).then((response) => {
-        const data = response.data.map((item) => ({
-          ...item,
-        }));
+      axios.get(`${apiServer}/api/recipe/getboard`).then((response) => {
+        const data = response.data;
+        console.log(data);
         setBoardItem(data);
         console.log("페이지 아이디:", location);
         setPageId(location);
@@ -107,7 +105,9 @@ const QuestionDetail = () => {
     try {
       axios
         .get(
-          `${apiServer}/api/comment/getcomment/${localStorage.getItem("id")}`
+          `${apiServer}/api/recipecomment/getcomment/${localStorage.getItem(
+            "id"
+          )}`
         )
         .then((response) => {
           const data = response.data;
@@ -126,14 +126,14 @@ const QuestionDetail = () => {
     if (result) {
       try {
         const response = await axios.delete(
-          `${apiServer}/api/board/delete/${location}`,
+          `${apiServer}/api/recipe/delete/${location}`,
           { id: Number(location) }
         );
         console.log(response);
-        alert("질문 삭제 완료");
-        navigate("/q&a");
+        alert("게시글 삭제 완료");
+        navigate("/best");
       } catch (error) {
-        alert("질문 삭제에 실패했습니다.");
+        alert("게시글 삭제에 실패했습니다.");
         console.log(error);
       }
     }
@@ -151,14 +151,14 @@ const QuestionDetail = () => {
       return;
     }
 
-    // 답글 등록
+    // 대댓글 등록
     try {
       const parentComment = commentItem.find(
         (item) => item.id === replyTargetId
       );
       const priValue = parentComment?.pri === 1 ? 1 : 0;
       const response = await axios.post(
-        `${apiServer}/api/comment/${localStorage.getItem("id")}/create`,
+        `${apiServer}/api/recipecomment/${localStorage.getItem("id")}/create`,
         {
           pageid,
           username,
@@ -188,7 +188,7 @@ const QuestionDetail = () => {
     // 댓글 등록
     try {
       const response = await axios.post(
-        `${apiServer}/api/comment/${localStorage.getItem("id")}/create`,
+        `${apiServer}/api/recipecomment/${localStorage.getItem("id")}/create`,
         {
           pageid,
           username,
@@ -224,29 +224,11 @@ const QuestionDetail = () => {
   };
 
   //댓글 삭제
-  const handleCDelete = async (e, itemid) => {
-    e.preventDefault();
-    try {
-      const response = await axios.delete(
-        `${apiServer}/api/comment/delete/${itemid}`,
-        {
-          id: itemid,
-        }
-      );
-      alert("댓글 삭제 성공");
-      window.location.reload(false);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log(id);
-  };
-
   const handleDelete = async (e, replyid) => {
     e.preventDefault();
     try {
       const response = await axios.delete(
-        `${apiServer}/api/comment/delete/${replyid}`,
+        `${apiServer}/api/recipecomment/delete/${replyid}`,
         {
           id: replyid,
         }
@@ -285,7 +267,7 @@ const QuestionDetail = () => {
     }
     try {
       const response = await axios.patch(
-        `${apiServer}/api/comment/update/${itemid}/`,
+        `${apiServer}/api/recipecomment/update/${itemid}/`,
         { comment: modComment, create_date, id: itemid }
       );
       alert("댓글 수정 성공");
@@ -301,8 +283,8 @@ const QuestionDetail = () => {
   const handleLike = async () => {
     try {
       const response = await axios.post(
-        `${apiServer}/api/board/like?user_id=${user}`,
-        { question_id: location }
+        `${apiServer}/api/recipe/like?recipe_user_id=${user}`,
+        { recipe_id: location }
       );
       alert("추천 성공");
       setLike(true);
@@ -317,8 +299,8 @@ const QuestionDetail = () => {
   const handleRemoveLike = async () => {
     try {
       const response = await axios.delete(
-        `${apiServer}/api/board/removelike?user_id=${user}`,
-        { data: { question_id: location } }
+        `${apiServer}/api/recipe/removelike?recipe_user_id=${user}`,
+        { data: { recipe_id: location } }
       );
       alert("추천 해제 성공");
       setLike(false);
@@ -334,7 +316,7 @@ const QuestionDetail = () => {
   const fetchLikeCount = async () => {
     try {
       const response = await axios.get(
-        `${apiServer}/api/board/likeCount?question_id=${location}`
+        `${apiServer}/api/recipe/likeCount?recipe_user_id=${location}`
       );
       setLikeCount(response.data.likeCount); // 좋아요 갯수 설정
     } catch (error) {
@@ -357,47 +339,45 @@ const QuestionDetail = () => {
                   }}
                 />
                 <CD>{item.create_date.split("T").shift()}</CD>
-                {/* 댓글 작성자에게만 수정,삭제 버튼 보이기 */}
+                {/* 댓글 작성자에게만 수정, 삭제 버튼 보이기 */}
                 <ButtonLike>
-                  <LikeContainer key={item.id}>
-                    <LikeButton>
-                      <span
-                        onClick={async () => {
-                          setLike((prevLike) => !prevLike);
-                          if (like) {
-                            handleRemoveLike();
-                          } else {
-                            handleLike();
-                          }
-                        }}
-                        className="material-icons"
-                      >
-                        <input
-                          type="hidden"
-                          value={location}
-                          onChange={location}
-                        />
-                        {!like ? "favorite_border" : "favorite"}
-                      </span>
-                      <p
-                        style={{
-                          fontSize: "3px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {likeCount} Likes
-                      </p>
-                    </LikeButton>
-                  </LikeContainer>
+                  <LikeButton>
+                    <span
+                      onClick={async () => {
+                        setLike((prevLike) => !prevLike);
+                        if (like) {
+                          handleRemoveLike();
+                        } else {
+                          handleLike();
+                        }
+                      }}
+                      className="material-icons"
+                    >
+                      <input
+                        type="hidden"
+                        value={location}
+                        onChange={location}
+                      />
+                      {!like ? "favorite_border" : "favorite"}
+                    </span>
+                    <p
+                      style={{
+                        fontSize: "3px",
+                        textAlign: "right",
+                      }}
+                    >
+                      {likeCount} Likes
+                    </p>
+                  </LikeButton>
                   {item.username === localStorage.getItem("id") ? (
                     <BtnContainer>
-                      <Link to={`/q&a/newpost/modify/${item.id}`}>
+                      <Link to={`/best/newpost/modify/${item.id}`}>
                         <button>수정</button>
                       </Link>
                       <button onClick={deleteQ}>삭제</button>
                     </BtnContainer>
                   ) : (
-                    <BtnContainer />
+                    <div style={{ marginBottom: "0" }} />
                   )}
                 </ButtonLike>
               </div>
@@ -680,4 +660,4 @@ const QuestionDetail = () => {
   );
 };
 
-export default QuestionDetail;
+export default PostDetail;

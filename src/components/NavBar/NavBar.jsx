@@ -5,6 +5,7 @@ import {
   Nav,
   NavButtons,
   Search,
+  User,
   UserList,
   UserListForm,
 } from "./NavBarSty";
@@ -80,6 +81,12 @@ const NavBar = () => {
           </div>
         </Button>
       </NavButtons>
+      <User>
+        <div>반갑습니다!</div>
+        <div>
+          <strong>{localStorage.getItem("id")}</strong> 님
+        </div>
+      </User>
     </Nav>
   );
 };

@@ -74,21 +74,7 @@ const MyPageForm = () => {
               </span>
             </span>
           </InfoButton>
-          <InfoButton onClick={() => handleButtonClick(<LikeForm />)}>
-            <span class="material-symbols-outlined">
-              favorite
-              <span
-                style={{
-                  fontSize: "17px",
-                  position: "relative",
-                  bottom: "5px",
-                  left: "10px",
-                }}
-              >
-                좋아요 리스트
-              </span>
-            </span>
-          </InfoButton>
+
           <InfoButton onClick={() => handleButtonClick(<DeleteForm />)}>
             <span class="material-symbols-outlined">
               waving_hand

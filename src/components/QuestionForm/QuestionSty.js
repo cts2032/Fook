@@ -11,30 +11,6 @@ export const QuestionContainer = styled.div`
   padding: 20px;
 `;
 
-export const BtnContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 110px;
-  height: 33px;
-  margin-left: 750px;
-  button {
-    padding: 5px;
-    width: 50px;
-    height: 30px;
-    background-color: #c7e8ca;
-    color: gray;
-    border: none;
-    border-radius: 4px;
-    font-size: 8px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #5d9c59;
-      color: white;
-    }
-  }
-`;
-
 export const Header = styled.div`
   width: 100%;
   height: 40px;
@@ -56,17 +32,53 @@ export const CD = styled.div`
   text-align: center;
 `;
 
-export const LikeContainer = styled.div`
+export const ButtonLike = styled.div`
   width: 100%;
-  height: 30px;
-  text-align: right;
-  .material-icons {
-    margin-right: 60px;
-    font-size: 24px;
-    color: #ff4c4c;
+  display: flex;
+  justify-content: right;
+`;
+
+export const BtnContainer = styled.div`
+  display: flex;
+  width: 47.5%;
+  height: 40px;
+  justify-content: right;
+  button {
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 5px;
+    width: 50px;
+    height: 30px;
+    background-color: #c7e8ca;
+    color: gray;
+    border: none;
+    border-radius: 4px;
+    font-size: 8px;
+    cursor: pointer;
+
     &:hover {
-      cursor: pointer;
+      background-color: #5d9c59;
+      color: white;
     }
+  }
+`;
+
+export const LikeContainer = styled.div`
+  width: 52.5%;
+  height: 40px;
+`;
+
+export const LikeButton = styled.div`
+  margin-left: 413px;
+  width: 35px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  .material-icons {
+    font-size: 24px;
+    text-align: center;
+    color: #ff4c4c;
+    cursor: pointer;
   }
 `;
 
@@ -84,6 +96,10 @@ export const Input = styled.input`
   font-size: 15px;
 `;
 
+export const Input2 = styled.input`
+  width: 100%;
+`;
+
 export const Button2 = styled.button`
   padding: 10px;
   width: 70px;
@@ -96,7 +112,8 @@ export const Button2 = styled.button`
 `;
 export const Button = styled.button`
   padding: 10px;
-  width: 70px;
+  width: 50px;
+  height: 40px;
   margin-left: 10px;
   background-color: #c7e8ca;
   color: gray;
@@ -111,40 +128,131 @@ export const Button = styled.button`
   }
 `;
 
+export const Button3 = styled.button`
+  padding: 5px;
+  width: 50px;
+  height: 32px;
+  margin-left: 10px;
+  background-color: #c7e8ca;
+  color: gray;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover {
+    background-color: #5d9c59;
+    color: white;
+  }
+`;
+
 export const CommentContainer = styled.div`
   width: 900px;
   height: max-content;
   margin: 0 auto;
   box-shadow: 1px 5px 15px 5px lightgray;
   margin-top: 15px;
+  margin-bottom: 100px;
   padding: 20px;
   ul {
     width: 100%;
     display: flex;
-    padding: 10px;
+    padding: 5px;
     margin: 0 auto;
-    .user {
-      width: 20%;
-    }
-    .comment {
-      width: 60%;
-    }
-    .date {
-      width: 20%;
-    }
   }
 `;
 
+export const CommentDiv = styled.div`
+  display: flex;
+  height: max-content;
+  flex-direction: column;
+`;
+
 export const CommentUl = styled.ul`
-  border-bottom: 1px dotted black;
+  border-bottom: 1px dotted #bbb;
+  height: max-content;
+  min-height: 60px;
   input {
-    width: 450px;
+    width: 338px;
+    height: 40px;
     margin-right: 45px;
     border: 1px solid #ccc;
+  }
+  .user {
+    width: 15%;
+  }
+  .comment {
+    width: 45%;
+  }
+  .date {
+    width: 15%;
+  }
+  .button {
+    width: 25%;
+  }
+`;
+export const CommentUl2 = styled.ul`
+  border-bottom: 1px dotted #bbb;
+  height: max-content;
+  p {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-right: 10px;
+    color: #aaa;
+  }
+  input {
+    width: 297px;
+    height: 40px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+  .user {
+    width: 15%;
+  }
+  .comment {
+    width: 36%;
+  }
+  .date {
+    width: 15%;
+  }
+`;
+
+export const CommentUl3 = styled.ul`
+  border-bottom: 1px dotted #bbb;
+  height: max-content;
+  p {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-right: 10px;
+    color: #aaa;
+  }
+  input {
+    width: 450px;
+    height: 30px;
+    margin-left: 70px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  .user {
+    width: 15%;
+  }
+  .comment {
+    width: 36%;
+  }
+  .date {
+    width: 15%;
+  }
+  .button {
+    margin-top: 20px;
+    width: 6%;
   }
 `;
 export const CommentLi = styled.li`
   padding-top: 10px;
+  display: flex;
+  .material-symbols-outlined {
+    font-size: 22px;
+    color: gray;
+  }
 `;
 
 export const StyledReactQuill = styled(ReactQuill)`
