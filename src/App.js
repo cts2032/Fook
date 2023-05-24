@@ -17,12 +17,16 @@ import QuestionDetail from "./components/QuestionForm/QuestionDetail";
 import EditQuestion from "./components/QuestionForm/EditQuestion";
 import PostDetail from "./components/BestRecipeForm/PostDetail";
 import EditPost from "./components/BestRecipeForm/EditPost";
+import NewNotice from "./components/NoticeForm/NewNotice";
+import NoticeDetail from "./components/NoticeForm/NoticeDetail";
 
 function App() {
   return (
     <Router>
       <NavBar />
       <Routes>
+        <Route path="/notice/detail/:idx" element={<NoticeDetail />} />
+        <Route path="/notice/newpost" element={<NewNotice />} />
         <Route path="/notice" element={<NoticeForm />} />
         <Route path="/ai/rec" element={<AIRecommend />} />
         <Route path="/ai" element={<AIForm />} />

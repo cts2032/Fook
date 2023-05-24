@@ -4,7 +4,7 @@ import ReactQuill from "react-quill";
 export const Container = styled.div`
   margin: 0 auto;
   max-width: 900px;
-  height: 1000px;
+  height: 1100px;
   padding: 20px;
   margin-bottom: 100px;
 `;
@@ -32,28 +32,32 @@ export const NewPostButton = styled.button`
 `;
 
 export const PostContainer = styled.div`
+  width: 100%;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  height: 960px;
-  justify-content: left;
+  height: 900px;
   margin-top: 20px;
+  justify-content: space-between;
+  padding: 10px;
 `;
 
 export const Post = styled.div`
   width: 250px;
-  height: 450px;
-  margin-bottom: 20px;
-  margin-right: 25px;
+  height: 380px;
+  margin-bottom: 30px;
 `;
 
 export const PostImage = styled.img`
   width: 100%;
-  height: 60%;
+  height: 260px;
+  border: 1px solid #dbdbdb;
 `;
 
 export const PostContent = styled.div`
   border: 1px solid #dbdbdb;
   padding: 10px;
+  width: 100%;
   height: 40%;
 `;
 
@@ -68,6 +72,10 @@ export const PostDescription = styled.p`
   margin-top: 3px;
   height: 60%;
   font-size: 14px;
+  img {
+    width: 0px;
+    height: 0px;
+  }
 `;
 
 export const DateLike = styled.div`
@@ -91,7 +99,6 @@ export const LikeButton = styled.div`
   right: 0;
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
   text-align: center;
   .material-icons {
     font-size: 24px;
@@ -100,6 +107,11 @@ export const LikeButton = styled.div`
       cursor: pointer;
     }
   }
+`;
+
+export const PageBox = styled.div`
+  width: 100%;
+  height: 50px;
 `;
 
 export const StyledReactQuill = styled(ReactQuill)`

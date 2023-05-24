@@ -64,7 +64,7 @@ const QuestionDetail = () => {
     const splitUrl = url.split("/");
     const location = splitUrl[splitUrl.length - 1];
     fetchLikeCount();
-    const storedLike = localStorage.getItem("like");
+    const storedLike = localStorage.getItem(`questionlike_${location}`);
     if (storedLike) {
       setLike(JSON.parse(storedLike));
     }
@@ -306,7 +306,7 @@ const QuestionDetail = () => {
       );
       alert("추천 성공");
       setLike(true);
-      localStorage.setItem("like", JSON.stringify(true));
+      localStorage.setItem(`questionlike_${location}`, JSON.stringify(true));
       setLikeCount((prevCount) => prevCount + 1);
       console.log(response);
     } catch (error) {
@@ -322,7 +322,7 @@ const QuestionDetail = () => {
       );
       alert("추천 해제 성공");
       setLike(false);
-      localStorage.setItem("like", JSON.stringify(false));
+      localStorage.setItem(`questionlike_${location}`, JSON.stringify(false));
       setLikeCount((prevCount) => prevCount - 1);
       console.log(response);
     } catch (error) {

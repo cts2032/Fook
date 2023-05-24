@@ -63,7 +63,7 @@ const PostDetail = () => {
     const splitUrl = url.split("/");
     const location = splitUrl[splitUrl.length - 1];
     fetchLikeCount();
-    const storedLike = localStorage.getItem("like");
+    const storedLike = localStorage.getItem(`recipelike_${location}`);
     if (storedLike) {
       setLike(JSON.parse(storedLike));
     }
@@ -283,12 +283,12 @@ const PostDetail = () => {
   const handleLike = async () => {
     try {
       const response = await axios.post(
-        `${apiServer}/api/recipe/like?recipe_user_id=${user}`,
-        { recipe_id: location }
+        `${apiServer}/api/recipe/like?user_id=${user}`,
+        { recipe_id: Number(location) }
       );
       alert("추천 성공");
       setLike(true);
-      localStorage.setItem("like", JSON.stringify(true));
+      localStorage.setItem(`recipelike_${location}`, JSON.stringify(true));
       setLikeCount((prevCount) => prevCount + 1);
       console.log(response);
     } catch (error) {
@@ -299,12 +299,12 @@ const PostDetail = () => {
   const handleRemoveLike = async () => {
     try {
       const response = await axios.delete(
-        `${apiServer}/api/recipe/removelike?recipe_user_id=${user}`,
+        `${apiServer}/api/recipe/removelike?user_id=${user}`,
         { data: { recipe_id: location } }
       );
       alert("추천 해제 성공");
       setLike(false);
-      localStorage.setItem("like", JSON.stringify(false));
+      localStorage.setItem(`recipelike_${location}`, JSON.stringify(false));
       setLikeCount((prevCount) => prevCount - 1);
       console.log(response);
     } catch (error) {
@@ -316,7 +316,7 @@ const PostDetail = () => {
   const fetchLikeCount = async () => {
     try {
       const response = await axios.get(
-        `${apiServer}/api/recipe/likeCount?recipe_user_id=${location}`
+        `${apiServer}/api/recipe/likeCount?recipe_id=${location}`
       );
       setLikeCount(response.data.likeCount); // 좋아요 갯수 설정
     } catch (error) {

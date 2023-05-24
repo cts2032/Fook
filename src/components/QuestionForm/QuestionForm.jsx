@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Container, Header, NewQuestionBtn } from "./QuestionFormSty";
+import {
+  Container,
+  Header,
+  NewQuestionBtn,
+  PageContainer,
+} from "./QuestionFormSty";
 import { Link, useNavigate } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import axios from "axios";
 import apiServer from "../../api/api";
 import QuestionDetail from "./QuestionDetail";
 import styled from "styled-components";
+import { PageBox } from "../BestRecipeForm/BestRecipeSty";
+import Paging from "../Paging/Paging";
 // import ReactPaginate from "react-paginate";
 
 export const Detail = styled(Link)`
@@ -19,6 +26,9 @@ export const Detail = styled(Link)`
 
 const QuestionForm = () => {
   const [boarditem, setBoardItem] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const offset = (page - 1) * limit;
 
   useEffect(() => {
     try {
@@ -30,7 +40,41 @@ const QuestionForm = () => {
     } catch (error) {
       console.log(error);
     }
+    // 유저정보 가져오기
+    axios
+      .get(`${apiServer}/api/user/get_id/${localStorage.getItem("id")}`)
+      .then((response) => {
+        const userData = response.data;
+        console.log("유저아이디 : ", userData[0].id);
+
+        try {
+          axios
+            .get(`${apiServer}/likes?user_id=${userData[0].id}`)
+            .then((response) => {
+              // 요청에 대한 처리 로직 추가
+              console.log(response.data);
+              const Questionlikes = response.data;
+              console.log("좋아요 한 질문게시물: " + Questionlikes.likes);
+              Questionlikes.likes.forEach((like) => {
+                localStorage.setItem(
+                  `questionlike_${like}`,
+                  JSON.stringify(true)
+                );
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } catch (error) {
+          console.error(error);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
+
+  const sortedBoardItems = boarditem.sort((a, b) => b.id - a.id);
 
   return (
     <Container>
@@ -52,7 +96,7 @@ const QuestionForm = () => {
           </tr>
         </thead>
         <tbody>
-          {boarditem.map((item, index) => (
+          {sortedBoardItems.slice(offset, offset + limit).map((item, index) => (
             <tr key={item.id}>
               <td>{index + 1}</td>
               <td>
@@ -64,19 +108,14 @@ const QuestionForm = () => {
           ))}
         </tbody>
       </Table>
-      {/* <ReactPaginate
-        pageCount={12}
-        pageRangeDisplayed={10}
-        marginPagesDisplayed={0}
-        breakLabel={""}
-        previousLabel={"이전"}
-        nextLabel={"다음"}
-        onPageChange={changePage}
-        containerClassName={"pagination-ul"}
-        activeClassName={"currentPage"}
-        previousClassName={"pageLabel-btn"}
-        nextClassName={"pageLabel-btn"}
-      /> */}
+      <PageContainer>
+        <Paging
+          total={boarditem.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </PageContainer>
     </Container>
   );
 };

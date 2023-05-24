@@ -10,8 +10,12 @@ import {
   UserListForm,
 } from "./NavBarSty";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import apiServer from "../../api/api";
 
 const NavBar = () => {
+  const [user, setUser] = useState([]);
   const navigate = useNavigate();
   const menuItems = [
     {
@@ -39,6 +43,20 @@ const NavBar = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    axios
+      .get(`${apiServer}/api/user/get_id/${localStorage.getItem("id")}`)
+      .then((response) => {
+        const userData = response.data;
+        setUser(userData[0].name);
+        console.log(userData);
+        console.log("유저 이름 : ", userData[0].name);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
   const [view, setView] = useState(false);
 
@@ -81,12 +99,14 @@ const NavBar = () => {
           </div>
         </Button>
       </NavButtons>
-      <User>
-        <div>반갑습니다!</div>
-        <div>
-          <strong>{localStorage.getItem("id")}</strong> 님
-        </div>
-      </User>
+      {localStorage.getItem("id") !== null && (
+        <User>
+          <div>반갑습니다!</div>
+          <div>
+            <strong>{user}</strong> 님
+          </div>
+        </User>
+      )}
     </Nav>
   );
 };
