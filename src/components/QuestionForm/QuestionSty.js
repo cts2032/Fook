@@ -40,7 +40,7 @@ export const ButtonLike = styled.div`
 
 export const BtnContainer = styled.div`
   display: flex;
-  width: 47.5%;
+  width: 48.5%;
   height: 40px;
   justify-content: right;
   button {
@@ -63,20 +63,14 @@ export const BtnContainer = styled.div`
   }
 `;
 
-export const LikeContainer = styled.div`
-  width: 52.5%;
-  height: 40px;
-`;
-
 export const LikeButton = styled.div`
-  margin-left: 413px;
-  width: 35px;
+  width: 51.5%;
   height: 40px;
   display: flex;
   flex-direction: column;
   .material-icons {
     font-size: 24px;
-    text-align: center;
+    text-align: right;
     color: #ff4c4c;
     cursor: pointer;
   }
@@ -191,32 +185,6 @@ export const CommentUl = styled.ul`
   }
 `;
 export const CommentUl2 = styled.ul`
-  border-bottom: 1px dotted #bbb;
-  height: max-content;
-  p {
-    margin-left: 50px;
-    margin-top: 10px;
-    margin-right: 10px;
-    color: #aaa;
-  }
-  input {
-    width: 297px;
-    height: 40px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-  }
-  .user {
-    width: 15%;
-  }
-  .comment {
-    width: 36%;
-  }
-  .date {
-    width: 15%;
-  }
-`;
-
-export const CommentUl3 = styled.ul`
   border-bottom: 1px dotted #bbb;
   height: max-content;
   p {

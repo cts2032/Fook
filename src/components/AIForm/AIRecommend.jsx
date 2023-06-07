@@ -27,6 +27,7 @@ const ImageContainer = styled.img`
   max-height: 80%;
   object-fit: contain;
   margin-bottom: 20px;
+  border-radius: 20px;
 `;
 const BackButton = styled.button`
   padding: 10px;

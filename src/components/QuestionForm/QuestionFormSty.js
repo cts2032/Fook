@@ -26,8 +26,3 @@ export const NewQuestionBtn = styled.button`
     color: #5d9c59;
   }
 `;
-
-export const PageContainer = styled.div`
-  width: 100%;
-  height: 50px;
-`;

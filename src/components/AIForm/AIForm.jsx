@@ -1,5 +1,10 @@
 import React from "react";
-import { Container, IngredientBox, SearchContainer } from "./AIFormSty";
+import {
+  Container,
+  IngredientBox,
+  ResultContainer,
+  SearchContainer,
+} from "./AIFormSty";
 import axios from "axios";
 import apiServer from "../../api/api";
 import { useState } from "react";
@@ -7,11 +12,10 @@ import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const Button = styled.button`
-  position: absolute;
   margin: auto;
-  top: 650px;
-  left: 0;
-  right: 0;
+  position: absolute;
+  bottom: 0;
+  left: 115px;
   padding: 10px;
   width: 70px;
   background-color: #c7e8ca;
@@ -82,24 +86,15 @@ const AIForm = () => {
 
   return (
     <Container>
-      <div>
-        <h2 style={{ marginBottom: "20px" }}>AI 추천</h2>
-      </div>
       <SearchContainer>
-        <IngredientBox>
-          {formData.map((item, index) => (
-            <div key={index}>
-              <input type="text" value={item.ingredient} disabled />
-              <input type="text" value={item.amount} disabled />
-            </div>
-          ))}
-        </IngredientBox>
+        <div>재료</div>
         <input
           type="text"
           value={ingredient}
           placeholder="재료를 입력해주세요."
           onChange={(e) => setIngredient(e.target.value)}
         />
+        <div>양</div>
         <input
           type="text"
           value={amount}
@@ -108,7 +103,58 @@ const AIForm = () => {
         />
         <button onClick={handleAddIngredient}>추가</button>
       </SearchContainer>
-      <Button onClick={handleSubmit}>search</Button>
+      <ResultContainer>
+        <div>입력</div>
+        <IngredientBox>
+          {formData.map((item, index) => (
+            <div
+              style={{
+                flexDirection: "row",
+                display: "flex",
+                backgroundColor: "transparent",
+                borderRadius: "10px",
+                margin: "10px 0 10px 0",
+              }}
+            >
+              <div>
+                <span
+                  style={{
+                    marginTop: "13px",
+                    fontSize: "30px",
+                    marginLeft: "2.5px",
+                  }}
+                  className="material-symbols-outlined"
+                >
+                  cancel
+                </span>
+              </div>
+              <div
+                className="InputBox"
+                style={{
+                  height: "60px",
+                  border: "none",
+                  backgroundColor: "transparent",
+                }}
+                key={index}
+              >
+                <input
+                  className="ingredient"
+                  type="text"
+                  value={"재료 : " + item.ingredient}
+                  disabled
+                />
+                <input
+                  className="amount"
+                  type="text"
+                  value={"양 : " + item.amount}
+                  disabled
+                />
+              </div>
+            </div>
+          ))}
+        </IngredientBox>
+        <Button onClick={handleSubmit}>search</Button>
+      </ResultContainer>
     </Container>
   );
 };

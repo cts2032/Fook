@@ -1,9 +1,29 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Header, Input, Warning } from "./RegisterSty";
 
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+// import "./Calendar/Calendar.css";
+// import styled from "styled-components";
 import axios from "axios";
 import apiServer from "./../../api/api";
 import { useNavigate } from "react-router-dom";
+
+// export const RegContainer = styled.form`
+//   border: none;
+//   box-shadow: 1px 5px 10px 5px lightgray;
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   margin: auto;
+//   padding: 1rem;
+//   width: 800px;
+//   height: 60vh;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
@@ -57,11 +77,6 @@ const RegisterForm = () => {
     }
     if (!containsSpecialCharacter(password)) {
       alert("비밀번호에는 최소 1개의 특수 문자가 포함되어야 합니다.");
-      return;
-    }
-
-    if (username === "admin") {
-      alert("사용할 수 없는 아이디입니다.");
       return;
     }
 
@@ -172,7 +187,17 @@ const RegisterForm = () => {
           ) : (
             <div style={{ marginBottom: "0" }} />
           )}
-
+          {/* <DatePicker
+            placeholderText="생년월일"
+            selected={birth}
+            onChange={(date) => setBirth(date)}
+            showYearDropdown
+            dateFormatCalendar="MMMM"
+            yearDropdownItemNumber={80}
+            scrollableYearDropdown
+            withPortal
+            portalId="root-portal"
+          /> */}
           <Input
             type="text"
             placeholder="생년월일 ex)2023/07/07"

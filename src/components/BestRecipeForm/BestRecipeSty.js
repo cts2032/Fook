@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import ReactQuill from "react-quill";
 
 export const Container = styled.div`
   margin: 0 auto;
   max-width: 900px;
-  height: 1100px;
+  height: 1000px;
   padding: 20px;
   margin-bottom: 100px;
 `;
@@ -32,32 +31,28 @@ export const NewPostButton = styled.button`
 `;
 
 export const PostContainer = styled.div`
-  width: 100%;
-  position: relative;
   display: flex;
   flex-wrap: wrap;
-  height: 900px;
+  height: 960px;
+  justify-content: left;
   margin-top: 20px;
-  justify-content: space-between;
-  padding: 10px;
 `;
 
 export const Post = styled.div`
   width: 250px;
-  height: 380px;
-  margin-bottom: 30px;
+  height: 450px;
+  margin-bottom: 20px;
+  margin-right: 25px;
 `;
 
 export const PostImage = styled.img`
   width: 100%;
-  height: 260px;
-  border: 1px solid #dbdbdb;
+  height: 60%;
 `;
 
 export const PostContent = styled.div`
   border: 1px solid #dbdbdb;
   padding: 10px;
-  width: 100%;
   height: 40%;
 `;
 
@@ -72,10 +67,6 @@ export const PostDescription = styled.p`
   margin-top: 3px;
   height: 60%;
   font-size: 14px;
-  img {
-    width: 0px;
-    height: 0px;
-  }
 `;
 
 export const DateLike = styled.div`
@@ -99,93 +90,11 @@ export const LikeButton = styled.div`
   right: 0;
   display: flex;
   flex-direction: column;
-  text-align: center;
   .material-icons {
     font-size: 24px;
     color: #ff4c4c;
     &:hover {
       cursor: pointer;
     }
-  }
-`;
-
-export const PageBox = styled.div`
-  width: 100%;
-  height: 50px;
-`;
-
-export const StyledReactQuill = styled(ReactQuill)`
-  .ql-toolbar {
-    border: none;
-    padding: 8px;
-    background-color: #f5f5f5;
-    font-size: 14px;
-    font-family: "Noto Sans KR", sans-serif;
-    border-radius: 5px 5px 0 0;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .ql-container {
-    border: none;
-    font-size: 16px;
-    font-family: "Noto Sans KR", sans-serif;
-  }
-
-  .ql-editor {
-    min-height: 300px;
-    line-height: 1.6;
-  }
-
-  .ql-snow .ql-picker-label {
-    color: #000;
-  }
-
-  .ql-snow .ql-picker-options {
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .ql-snow .ql-picker-item {
-    padding: 5px;
-    cursor: pointer;
-  }
-
-  .ql-snow .ql-picker-item:hover {
-    background-color: #f5f5f5;
-  }
-
-  .ql-snow .ql-picker-item.ql-selected {
-    background-color: #0077c6;
-    color: #fff;
-  }
-
-  .ql-snow .ql-action {
-    color: #000;
-  }
-
-  .ql-snow .ql-picker.ql-expanded .ql-picker-label {
-    color: #0077c6;
-  }
-
-  .ql-snow .ql-picker.ql-expanded .ql-picker-item {
-    color: #000;
-  }
-
-  .ql-snow .ql-picker.ql-expanded .ql-picker-item:hover,
-  .ql-snow .ql-picker.ql-expanded .ql-picker-item.ql-selected {
-    background-color: #f5f5f5;
-  }
-
-  .ql-toolbar .ql-formats + .ql-formats,
-  .ql-toolbar .ql-snow + .ql-snow {
-    margin-left: 8px;
-  }
-
-  .ql-snow.ql-toolbar:after {
-    clear: both;
-    content: "";
-    display: table;
   }
 `;

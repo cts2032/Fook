@@ -1,64 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Boards,
+  Btn,
+  Button,
   Home,
-  HomeNotice,
   MainRecipe,
   Notice,
-  Title,
   TodayRecipe,
 } from "./HomePageSty";
 import SimpleSlider from "./Slider/SimpleSlider";
-import RandomImg from "./RandomImg";
-import axios from "axios";
-import apiServer from "../../api/api";
-import { Link } from "react-router-dom";
-import { Detail } from "../NoticeForm/NoticeForm";
+import random from "../Image/foodImg.jpg";
 
 const HomeForm = () => {
-  const [boarditem, setBoardItem] = useState([]);
-
-  useEffect(() => {
-    try {
-      axios.get(`${apiServer}/api/admin/getboard`).then((response) => {
-        const data = response.data;
-        setBoardItem(data);
-        console.log(boarditem);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-  const sortedBoardItems = boarditem.sort((a, b) => b.id - a.id);
-  const SlicingItem = sortedBoardItems.slice(0, 5);
-
   return (
     <Home style={{ display: "block" }}>
       <Boards>
         <MainRecipe>
-          <div>
-            <Title>인기 레시피</Title>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "#333",
+                marginBottom: "10px",
+              }}
+            >
+              인기 레시피
+            </div>
+            <Btn>
+              <Button>주간</Button>
+              <Button>월간</Button>
+            </Btn>
           </div>
-          <SimpleSlider />
+          <SimpleSlider></SimpleSlider>
         </MainRecipe>
         <TodayRecipe>
-          <div>
-            <Title>랜덤 레시피</Title>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "#333",
+                marginBottom: "10px",
+              }}
+            >
+              오늘의 레시피
+            </div>
           </div>
-          <RandomImg />
+          <img src={random} alt="random"></img>
         </TodayRecipe>
         <Notice>
-          <div>
-            <Title>공지사항</Title>
+          <div
+            style={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              color: "#333",
+              marginBottom: "10px",
+            }}
+          >
+            공지사항
           </div>
-          {SlicingItem.map((item, index) => (
-            <HomeNotice key={item.id}>
-              <p>{index + 1}.</p>
-              <p>
-                <Detail to={`/notice/detail/${item.id}`}>{item.subject}</Detail>
-              </p>
-            </HomeNotice>
-          ))}
+          <p>1.aaaa</p>
+          <p>2.aaaa</p>
+          <p>3.aaaa</p>
+          <p>4.aaaa</p>
+          <p>5.aaaa</p>
         </Notice>
       </Boards>
     </Home>

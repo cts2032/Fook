@@ -14,15 +14,3 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-export const NewPostButton = styled.button`
-  border: none;
-  background-color: transparent;
-  color: black;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    color: #5d9c59;
-  }
-`;

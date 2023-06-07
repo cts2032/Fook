@@ -12,11 +12,16 @@ export const Nav = styled.nav`
   margin: auto;
 `;
 
+export const Brand = styled.img`
+  height: 10vh;
+  cursor: pointer;
+`;
+
 export const Search = styled.div`
   position: relative;
   height: 34px;
   margin-top: 30px;
-  margin-left: 270px;
+  margin-left: 100px;
   input {
     width: 300px;
     height: inherit;
@@ -99,10 +104,4 @@ export const UserList = styled.li`
     color: white;
     height: 40px;
   }
-`;
-
-export const User = styled.div`
-  height: auto;
-  border: 1px solid red;
-  border: 100px;
 `;

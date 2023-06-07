@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import boardImg from "../Image/foodImg.jpg";
-import Comment from "./Comment";
 
 export const ViewContainer = styled.div`
   width: 900px;
@@ -98,7 +97,6 @@ const ViewPost = () => {
         <span class="material-icons">favorite_border</span>
       </LikeContainer> */}
       </ViewContainer>
-      <Comment />
     </>
   );
 };
