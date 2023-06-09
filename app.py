@@ -11,19 +11,13 @@ app = FastAPI()
 # 모델 파일 경로
 MODEL_FILE_PATH = "aa.h5"
 
-# 모델 로드
+
 model = keras.models.load_model(MODEL_FILE_PATH)
 data = pd.read_excel("./재료2.xlsx")
 
 
-class Item(BaseModel):
-    ingredient: str
-    amount: int
-
-
 @app.post("/predict")
-async def predict(item: Item):
-    input_data = dict({item.ingredient: item.amount})
+async def predict(input_data: dict):
     # 모델 예측
     print(input_data)
     try:
