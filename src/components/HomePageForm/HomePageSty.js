@@ -9,20 +9,10 @@ export const Home = styled.div`
   margin: auto;
 `;
 
-// export const Boards = styled.div`
-//   display: flex;
-//   position: relative;
-//   flex-direction: column;
-//   margin-bottom: 5px;
-//   height: 20vh;
-//   padding: 5%;
-//   margin-left: 32.8%;
-// `;
-
 export const Boards = styled.div`
   position: relative;
   width: 500px;
-  height: 1200px;
+  height: 1300px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -36,6 +26,13 @@ export const Boards = styled.div`
   background-repeat: no-repeat;
   /* background-size: 100% 245px; */
   background-color: transparent;
+`;
+
+export const Title = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 `;
 
 export const MainRecipe = styled.div`
@@ -71,10 +68,17 @@ export const Notice = styled.div`
   border-radius: 5px;
   margin-top: 880px;
   width: 500px;
-  height: 300px;
+  height: max-content;
   text-align: left;
   padding: 30px;
   box-shadow: 1px 5px 15px 5px lightgray;
+`;
+
+export const HomeNotice = styled.div`
+  display: flex;
+  p {
+    margin-right: 10px;
+  }
 `;
 
 export const Btn = styled.div`

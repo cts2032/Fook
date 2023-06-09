@@ -15,14 +15,10 @@ const BotNav = () => {
       return;
     } else navigate(`/mypage/${localStorage.getItem("id")}`);
   };
-  // const onClickMy = () => {
-  //   navigate(`/mypage`);
-  // };
 
   const handleLogout = async (event) => {
     event.preventDefault();
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("id");
+    localStorage.clear();
     alert("로그아웃 성공");
     navigate("/login");
   };

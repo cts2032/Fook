@@ -11,6 +11,7 @@ import {
   CD,
   Content,
   Header,
+  LikeContainer,
   QuestionContainer,
 } from "../QuestionForm/QuestionSty";
 
@@ -102,12 +103,15 @@ const NoticeDetail = () => {
                 {/* 작성자에게만 수정,삭제 버튼 보이기 */}
                 <ButtonLike>
                   {item.username === localStorage.getItem("id") ? (
-                    <BtnContainer>
-                      <Link to={`/notice/newpost/modify/${item.id}`}>
-                        <button>수정</button>
-                      </Link>
-                      <button onClick={deleteQ}>삭제</button>
-                    </BtnContainer>
+                    <>
+                      <LikeContainer></LikeContainer>
+                      <BtnContainer>
+                        <Link to={`/notice/newpost/modify/${item.id}`}>
+                          <button>수정</button>
+                        </Link>
+                        <button onClick={deleteQ}>삭제</button>
+                      </BtnContainer>
+                    </>
                   ) : (
                     <BtnContainer />
                   )}

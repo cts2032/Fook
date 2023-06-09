@@ -61,9 +61,9 @@ const NewQuestion = () => {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [create_date, setCreate_date] = useState(new Date());
-
   const now = new Date();
   const formattedDate = now.toISOString();
+
   const destroyQuill = () => {
     if (quillRef.current) {
       quillRef.current.destroy(); // destroy Quill editor
@@ -128,7 +128,7 @@ const NewQuestion = () => {
 
       try {
         const response = await axios.post(
-          `http://1.252.156.171:8000/api/image/uploadfile`, // 변경해야함
+          `http://192.168.0.42:8000/api/image/uploadfile`, // 변경해야함
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },

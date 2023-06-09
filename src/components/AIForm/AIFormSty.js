@@ -21,9 +21,7 @@ export const SearchContainer = styled.div`
   width: 300px;
   height: 500px;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  justify-items: center;
+  border: 1px solid red;
   margin-left: 70px;
   input[type="text"] {
     width: 250px;
@@ -61,8 +59,7 @@ export const ResultContainer = styled.div`
   width: 300px;
   height: 500px;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
+  border: 1px solid red;
   margin-right: 70px;
   position: relative;
   overflow-y: scroll;

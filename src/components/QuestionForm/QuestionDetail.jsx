@@ -3,27 +3,30 @@ import React from "react";
 import { useEffect } from "react";
 import apiServer from "../../api/api";
 import { useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import {
   BtnContainer,
   Button,
   Button2,
   Button3,
+  ButtonLike,
   CD,
   CommentContainer,
   CommentDiv,
   CommentLi,
   CommentUl,
   CommentUl2,
+  CommentUl3,
   Content,
   Header,
   Input,
   Input2,
   InputContainer,
+  LikeButton,
+  LikeContainer,
   QuestionContainer,
 } from "./QuestionSty";
-import { LikeButton } from "../BestRecipeForm/BestRecipeSty";
 
 const QuestionDetail = () => {
   const ID = String(localStorage.getItem("id"));
@@ -61,7 +64,7 @@ const QuestionDetail = () => {
     const splitUrl = url.split("/");
     const location = splitUrl[splitUrl.length - 1];
     fetchLikeCount();
-    const storedLike = localStorage.getItem("like");
+    const storedLike = localStorage.getItem(`questionlike_${location}`);
     if (storedLike) {
       setLike(JSON.parse(storedLike));
     }
@@ -72,8 +75,9 @@ const QuestionDetail = () => {
     setCurrentLastUrl(location);
     try {
       axios.get(`${apiServer}/api/board/getboard`).then((response) => {
-        const data = response.data;
-        console.log(data);
+        const data = response.data.map((item) => ({
+          ...item,
+        }));
         setBoardItem(data);
         console.log("페이지 아이디:", location);
         setPageId(location);
@@ -220,6 +224,24 @@ const QuestionDetail = () => {
   };
 
   //댓글 삭제
+  const handleCDelete = async (e, itemid) => {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(
+        `${apiServer}/api/comment/delete/${itemid}`,
+        {
+          id: itemid,
+        }
+      );
+      alert("댓글 삭제 성공");
+      window.location.reload(false);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(id);
+  };
+
   const handleDelete = async (e, replyid) => {
     e.preventDefault();
     try {
@@ -257,14 +279,14 @@ const QuestionDetail = () => {
   };
 
   //댓글 수정
-  const handleUpdate = async (e) => {
+  const handleUpdate = async (e, itemid) => {
     if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
     }
     try {
       const response = await axios.patch(
-        `${apiServer}/api/comment/update/${localStorage.getItem("id")}/`,
-        { comment: modComment, create_date }
+        `${apiServer}/api/comment/update/${itemid}/`,
+        { comment: modComment, create_date, id: itemid }
       );
       alert("댓글 수정 성공");
       window.location.reload(false);
@@ -272,6 +294,7 @@ const QuestionDetail = () => {
     } catch (error) {
       console.log(error);
     }
+    console.log(itemid);
   };
 
   // 좋아요 기능
@@ -283,7 +306,7 @@ const QuestionDetail = () => {
       );
       alert("추천 성공");
       setLike(true);
-      localStorage.setItem("like", JSON.stringify(true));
+      localStorage.setItem(`questionlike_${location}`, JSON.stringify(true));
       setLikeCount((prevCount) => prevCount + 1);
       console.log(response);
     } catch (error) {
@@ -299,7 +322,7 @@ const QuestionDetail = () => {
       );
       alert("추천 해제 성공");
       setLike(false);
-      localStorage.setItem("like", JSON.stringify(false));
+      localStorage.setItem(`questionlike_${location}`, JSON.stringify(false));
       setLikeCount((prevCount) => prevCount - 1);
       console.log(response);
     } catch (error) {
@@ -318,8 +341,10 @@ const QuestionDetail = () => {
       console.log(error);
     }
   };
+
   return (
     <>
+      {/* 게시글 */}
       <QuestionContainer>
         {boarditem.map((item) => (
           <div key={item.id} className={item.id} id={currentLastUrl}>
@@ -332,46 +357,56 @@ const QuestionDetail = () => {
                   }}
                 />
                 <CD>{item.create_date.split("T").shift()}</CD>
-                {item.username === localStorage.getItem("id") ? (
-                  <BtnContainer>
-                    <Link to={`/q&a/newpost/modify/${item.id}`}>
-                      <button>수정</button>
-                    </Link>
-                    <button onClick={deleteQ}>삭제</button>
-                  </BtnContainer>
-                ) : (
-                  <div style={{ marginBottom: "0" }} />
-                )}
+                {/* 댓글 작성자에게만 수정,삭제 버튼 보이기 */}
+                <ButtonLike>
+                  <LikeContainer key={item.id}>
+                    <LikeButton>
+                      <span
+                        onClick={async () => {
+                          setLike((prevLike) => !prevLike);
+                          if (like) {
+                            handleRemoveLike();
+                          } else {
+                            handleLike();
+                          }
+                        }}
+                        className="material-icons"
+                      >
+                        <input
+                          type="hidden"
+                          value={location}
+                          onChange={location}
+                        />
+                        {!like ? "favorite_border" : "favorite"}
+                      </span>
+                      <p
+                        style={{
+                          fontSize: "3px",
+                          textAlign: "right",
+                        }}
+                      >
+                        {likeCount} Likes
+                      </p>
+                    </LikeButton>
+                  </LikeContainer>
+                  {item.username === localStorage.getItem("id") ? (
+                    <BtnContainer>
+                      <Link to={`/q&a/newpost/modify/${item.id}`}>
+                        <button>수정</button>
+                      </Link>
+                      <button onClick={deleteQ}>삭제</button>
+                    </BtnContainer>
+                  ) : (
+                    <BtnContainer />
+                  )}
+                </ButtonLike>
               </div>
             )}
           </div>
         ))}
-        <LikeButton>
-          <span
-            onClick={async () => {
-              setLike((prevLike) => !prevLike);
-              if (like) {
-                handleRemoveLike();
-              } else {
-                handleLike();
-              }
-            }}
-            className="material-icons"
-          >
-            <input type="hidden" value={location} onChange={location} />
-            {!like ? "favorite_border" : "favorite"}
-          </span>
-          <p
-            style={{
-              fontSize: "3px",
-              textAlign: "center",
-              marginRight: "9px",
-            }}
-          >
-            {likeCount} Likes
-          </p>
-        </LikeButton>
       </QuestionContainer>
+
+      {/* 댓글 입력 */}
       <InputContainer>
         <Input
           type="text"
@@ -393,48 +428,53 @@ const QuestionDetail = () => {
         </Button2>
         <Button onClick={handleSubmit}>등록</Button>
       </InputContainer>
+
+      {/* 댓글 */}
       <CommentContainer>
         {commentItem
           .filter((item) => Number(location) === item.pageid)
           .map((item) => (
             <CommentDiv>
+              {/* 대댓글이 아닌 댓글 */}
               {item.parentid === 0 && (
                 <CommentUl key={item.id}>
                   <CommentLi className="user">{item.username}</CommentLi>
-
-                  {item.pri === true ? (
-                    changeInput && modifyTargetId === item.id ? (
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          handleUpdate(item.create_date, item.comment);
-                        }}
-                      >
-                        <input
-                          type="text"
-                          defaultValue={item.comment}
-                          onChange={(e) => setModComment(e.target.value)}
-                        />
-                        <input
-                          type="hidden"
-                          defaultValue={item.create_date}
-                          onChange={setCreate_date}
-                        />
-                      </form>
-                    ) : (
-                      <CommentLi className="comment">{item.comment}</CommentLi>
-                    )
-                  ) : boardMaster === localStorage.getItem("id") ||
+                  {/* 수정버튼 눌렀을때 input창 변환 */}
+                  {changeInput && modifyTargetId === item.id ? (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleUpdate(item.create_date, item.comment, item.id);
+                      }}
+                    >
+                      <input
+                        type="text"
+                        defaultValue={item.comment}
+                        onChange={(e) => setModComment(e.target.value)}
+                      />
+                      <input
+                        type="hidden"
+                        defaultValue={item.create_date}
+                        onChange={setCreate_date}
+                      />
+                    </form>
+                  ) : // 댓글이 비공개일때
+                  item.pri === false ? (
+                    // 게시글 주인이랑 댓글 작성자한테만 보임
+                    boardMaster === localStorage.getItem("id") ||
                     item.username === localStorage.getItem("id") ? (
-                    <CommentLi className="comment">
-                      <span className="material-symbols-outlined">lock</span>
-                      {item.comment}
-                    </CommentLi>
+                      <CommentLi className="comment">
+                        <span className="material-symbols-outlined">lock</span>
+                        {item.comment}
+                      </CommentLi>
+                    ) : (
+                      <CommentLi className="comment">
+                        <span class="material-symbols-outlined">lock</span>
+                        비공개 댓글입니다.
+                      </CommentLi>
+                    )
                   ) : (
-                    <CommentLi className="comment">
-                      <span class="material-symbols-outlined">lock</span>
-                      비공개 댓글입니다.
-                    </CommentLi>
+                    <CommentLi className="comment">{item.comment}</CommentLi>
                   )}
 
                   <CommentLi className="date">
@@ -443,9 +483,15 @@ const QuestionDetail = () => {
 
                   <CommentLi>{item.pri}</CommentLi>
 
+                  {/* 수정버튼 누르면 버튼 변환 */}
                   {changeButton && modifyTargetId === item.id ? (
                     <CommentLi className="button">
-                      <Button type="submit" onClick={handleUpdate}>
+                      <Button
+                        type="submit"
+                        onClick={(e) => {
+                          handleUpdate(e, item.id);
+                        }}
+                      >
                         완료
                       </Button>
                       <Button
@@ -458,14 +504,21 @@ const QuestionDetail = () => {
                         취소
                       </Button>
                     </CommentLi>
-                  ) : item.pri === false ? (
+                  ) : // 댓글이 비공개일 때
+                  item.pri === false ? (
                     <CommentLi className="button">
+                      {/* 댓글 작성자와 게시글 작성자만 답글 버튼 보임 */}
                       {item.username === localStorage.getItem("id") ||
                       boardMaster === localStorage.getItem("id") ? (
                         <>
                           <Button onClick={() => handleAddRep(item.id)}>
                             답글
                           </Button>
+                        </>
+                      ) : null}
+                      {/* 댓글 작성자한테만 수정,삭제 버튼 보임 */}
+                      {item.username === localStorage.getItem("id") && (
+                        <>
                           <Button
                             onClick={() => {
                               handleModify(item.id, item.comment);
@@ -474,10 +527,15 @@ const QuestionDetail = () => {
                           >
                             수정
                           </Button>
-                          <Button onClick={handleDelete}>삭제</Button>
-                          ///////////////////////////////정리부분
+                          <Button
+                            onClick={(e) => {
+                              handleDelete(e, item.id);
+                            }}
+                          >
+                            삭제
+                          </Button>
                         </>
-                      ) : null}
+                      )}
                     </CommentLi>
                   ) : (
                     <CommentLi className="button">
@@ -494,21 +552,51 @@ const QuestionDetail = () => {
                           >
                             수정
                           </Button>
-                          <Button onClick={handleDelete}>삭제</Button>
+                          <Button
+                            onClick={(e) => {
+                              handleDelete(e, item.id);
+                            }}
+                          >
+                            삭제
+                          </Button>
                         </>
                       )}
                     </CommentLi>
                   )}
                 </CommentUl>
               )}
+
+              {/* 대댓글 */}
               {commentItem
                 .filter((reply) => reply.parentid === item.id)
                 .map((reply) => (
                   <CommentUl2 key={reply.id}>
                     <p>└</p>
                     <CommentLi className="user">{reply.username}</CommentLi>
-                    {reply.pri === false ? (
+                    {/* 수정버튼 누르면 input창 변환 */}
+                    {changeInput && modifyTargetId === reply.id ? (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleUpdate(reply.create_date, reply.comment);
+                        }}
+                      >
+                        <input
+                          type="text"
+                          defaultValue={reply.comment}
+                          onChange={(e) => setModComment(e.target.value)}
+                        />
+                        <input
+                          type="hidden"
+                          defaultValue={reply.create_date}
+                          onChange={setCreate_date}
+                        />
+                      </form>
+                    ) : // 댓글이 비공개일 때
+                    item.pri === false ? (
+                      // 대댓글 작성자, 댓글 작성자, 게시글 작성자에게는 보임
                       reply.username === localStorage.getItem("id") ||
+                      item.username === localStorage.getItem("id") ||
                       boardMaster === localStorage.getItem("id") ? (
                         <CommentLi className="comment">
                           <span className="material-symbols-outlined">
@@ -530,36 +618,60 @@ const QuestionDetail = () => {
                     <CommentLi className="date">
                       {reply.create_date.split("T").shift()}
                     </CommentLi>
-                    {item.username === localStorage.getItem("id") ||
-                    boardMaster === localStorage.getItem("id") ? (
-                      <>
-                        <Button onClick={() => handleAddRep(item.id)}>
-                          답글
-                        </Button>
-                      </>
-                    ) : null}
-                    {reply.username === localStorage.getItem("id") && (
-                      <>
-                        <Button>수정</Button>
+                    {/* 수정버튼 눌렀을 때 버튼 변환 */}
+                    {changeButton && modifyTargetId === reply.id ? (
+                      <CommentLi className="button">
                         <Button
+                          type="submit"
                           onClick={(e) => {
-                            handleDelete(e, reply.id);
+                            handleUpdate(e, reply.id);
                           }}
                         >
-                          삭제
+                          완료
                         </Button>
-                      </>
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            changeBtn(reply.id);
+                            handleModify(reply.id, reply.comment);
+                          }}
+                        >
+                          취소
+                        </Button>
+                      </CommentLi>
+                    ) : (
+                      // 대댓글 작성자만 수정, 삭제버튼 보임
+                      reply.username === localStorage.getItem("id") && (
+                        <>
+                          <Button
+                            onClick={() => {
+                              handleModify(reply.id, reply.comment, reply.id);
+                              changeBtn(reply.id);
+                            }}
+                          >
+                            수정
+                          </Button>
+                          <Button
+                            onClick={(e) => {
+                              handleDelete(e, reply.id);
+                            }}
+                          >
+                            삭제
+                          </Button>
+                        </>
+                      )
                     )}
                   </CommentUl2>
                 ))}
+              {/* 답글 버튼 누르면 input창 생성 */}
               {addComment && replyTargetId === item.id ? (
-                <CommentUl2>
+                <CommentUl3>
                   <Input2
                     type="text"
                     onChange={(e) => setReply(e.target.value)}
                   ></Input2>
                   <Button3 onClick={handleReply}>등록</Button3>
-                </CommentUl2>
+                </CommentUl3>
               ) : null}
             </CommentDiv>
           ))}

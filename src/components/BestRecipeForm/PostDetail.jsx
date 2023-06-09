@@ -24,6 +24,7 @@ import {
   Input2,
   InputContainer,
   LikeButton,
+  LikeContainer,
   QuestionContainer,
 } from "../QuestionForm/QuestionSty";
 
@@ -341,34 +342,36 @@ const PostDetail = () => {
                 <CD>{item.create_date.split("T").shift()}</CD>
                 {/* 댓글 작성자에게만 수정, 삭제 버튼 보이기 */}
                 <ButtonLike>
-                  <LikeButton>
-                    <span
-                      onClick={async () => {
-                        setLike((prevLike) => !prevLike);
-                        if (like) {
-                          handleRemoveLike();
-                        } else {
-                          handleLike();
-                        }
-                      }}
-                      className="material-icons"
-                    >
-                      <input
-                        type="hidden"
-                        value={location}
-                        onChange={location}
-                      />
-                      {!like ? "favorite_border" : "favorite"}
-                    </span>
-                    <p
-                      style={{
-                        fontSize: "3px",
-                        textAlign: "right",
-                      }}
-                    >
-                      {likeCount} Likes
-                    </p>
-                  </LikeButton>
+                  <LikeContainer>
+                    <LikeButton>
+                      <span
+                        onClick={async () => {
+                          setLike((prevLike) => !prevLike);
+                          if (like) {
+                            handleRemoveLike();
+                          } else {
+                            handleLike();
+                          }
+                        }}
+                        className="material-icons"
+                      >
+                        <input
+                          type="hidden"
+                          value={location}
+                          onChange={location}
+                        />
+                        {!like ? "favorite_border" : "favorite"}
+                      </span>
+                      <p
+                        style={{
+                          fontSize: "3px",
+                          textAlign: "right",
+                        }}
+                      >
+                        {likeCount} Likes
+                      </p>
+                    </LikeButton>
+                  </LikeContainer>
                   {item.username === localStorage.getItem("id") ? (
                     <BtnContainer>
                       <Link to={`/best/newpost/modify/${item.id}`}>

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import apiServer from "../../api/api";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const ImgBox = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ const Img = styled.img`
 const RandomImg = () => {
   const [boarditem, setBoardItem] = useState([]);
   const [randomImage, setRandomImage] = useState(null);
+  const [randomItem, setRandomItem] = useState(null);
 
   useEffect(() => {
     try {
@@ -47,6 +49,7 @@ const RandomImg = () => {
         const randomItem = imagesWithContent[randomIndex];
         const imageSource = extractImageSource(randomItem.content);
         setRandomImage(imageSource);
+        setRandomItem(randomItem);
       }
     }
   }, [boarditem]);
@@ -63,9 +66,13 @@ const RandomImg = () => {
 
   return (
     <div>
-      <ImgBox>
-        {randomImage && <Img src={randomImage} alt="Random Image" />}
-      </ImgBox>
+      {randomItem && (
+        <Link to={`/best/detail/${randomItem.id}`}>
+          <ImgBox>
+            {randomImage && <Img src={randomImage} alt="Random Image" />}
+          </ImgBox>
+        </Link>
+      )}
     </div>
   );
 };
