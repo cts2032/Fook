@@ -13,9 +13,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export const Button = styled.button`
   margin: auto;
-  position: absolute;
-  bottom: 0;
-  left: 115px;
+  position: relative;
+  bottom: -250px;
   padding: 10px;
   width: 70px;
   background-color: #c7e8ca;
@@ -35,7 +34,6 @@ const AIForm = () => {
   const [ingredient, setIngredient] = useState("");
   const [amount, setAmount] = useState("");
   const [formData, setFormData] = useState([]);
-  const navigate = useNavigate();
   const location = useLocation();
 
   const handleAddIngredient = () => {
@@ -55,6 +53,15 @@ const AIForm = () => {
     setIngredient("");
     setAmount("");
     console.log(location);
+  };
+
+  // handleDelete 함수 정의
+  const handleDelete = (index) => {
+    // 새로운 배열 생성하여 삭제할 인덱스를 제외한 나머지 요소들을 복사
+    const updatedFormData = formData.filter((item, i) => i !== index);
+
+    // formData 업데이트
+    setFormData(updatedFormData);
   };
 
   const handleSubmit = async (event) => {
@@ -103,8 +110,8 @@ const AIForm = () => {
         />
         <button onClick={handleAddIngredient}>추가</button>
       </SearchContainer>
+      <Button onClick={handleSubmit}>search</Button>
       <ResultContainer>
-        <div>입력</div>
         <IngredientBox>
           {formData.map((item, index) => (
             <div
@@ -113,47 +120,46 @@ const AIForm = () => {
                 display: "flex",
                 backgroundColor: "transparent",
                 borderRadius: "10px",
-                margin: "10px 0 10px 0",
               }}
             >
               <div>
                 <span
                   style={{
-                    marginTop: "13px",
                     fontSize: "30px",
-                    marginLeft: "2.5px",
                   }}
+                  onClick={() => handleDelete(index)}
                   className="material-symbols-outlined"
                 >
                   cancel
                 </span>
               </div>
-              <div
-                className="InputBox"
-                style={{
-                  height: "60px",
-                  border: "none",
-                  backgroundColor: "transparent",
-                }}
-                key={index}
-              >
+              <div className="speech-bubble" key={index}>
                 <input
-                  className="ingredient"
                   type="text"
                   value={"재료 : " + item.ingredient}
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    textAlign: "center",
+                    fontSize: "17px",
+                  }}
                   disabled
                 />
                 <input
-                  className="amount"
                   type="text"
                   value={"양 : " + item.amount}
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    textAlign: "center",
+                    fontSize: "17px",
+                  }}
                   disabled
                 />
               </div>
             </div>
           ))}
         </IngredientBox>
-        <Button onClick={handleSubmit}>search</Button>
       </ResultContainer>
     </Container>
   );
