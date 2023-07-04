@@ -93,74 +93,80 @@ const AIForm = () => {
 
   return (
     <Container>
-      <SearchContainer>
-        <div>재료</div>
-        <input
-          type="text"
-          value={ingredient}
-          placeholder="재료를 입력해주세요."
-          onChange={(e) => setIngredient(e.target.value)}
-        />
-        <div>양</div>
-        <input
-          type="text"
-          value={amount}
-          placeholder="숫자만 입력해주세요.(g,ml)"
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <button onClick={handleAddIngredient}>추가</button>
-      </SearchContainer>
-      <Button onClick={handleSubmit}>search</Button>
-      <ResultContainer>
-        <IngredientBox>
-          {formData.map((item, index) => (
-            <div
-              style={{
-                flexDirection: "row",
-                display: "flex",
-                backgroundColor: "transparent",
-                borderRadius: "10px",
-              }}
-            >
-              <div>
-                <span
-                  style={{
-                    fontSize: "30px",
-                  }}
-                  onClick={() => handleDelete(index)}
-                  className="material-symbols-outlined"
-                >
-                  cancel
-                </span>
+      <div className="text">
+        냉장고에 남아있는 재료들로 <br />
+        AI에게 레시피를 추천받아보세요!
+      </div>
+      <div style={{ display: "flex" }}>
+        <SearchContainer>
+          <div>재료</div>
+          <input
+            type="text"
+            value={ingredient}
+            placeholder="재료를 입력해주세요."
+            onChange={(e) => setIngredient(e.target.value)}
+          />
+          <div>양</div>
+          <input
+            type="text"
+            value={amount}
+            placeholder="숫자만 입력해주세요.(g,ml)"
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <button onClick={handleAddIngredient}>추가</button>
+        </SearchContainer>
+        <Button onClick={handleSubmit}>search</Button>
+        <ResultContainer>
+          <IngredientBox>
+            {formData.map((item, index) => (
+              <div
+                style={{
+                  flexDirection: "row",
+                  display: "flex",
+                  backgroundColor: "transparent",
+                  borderRadius: "10px",
+                }}
+              >
+                <div>
+                  <span
+                    style={{
+                      fontSize: "30px",
+                    }}
+                    onClick={() => handleDelete(index)}
+                    className="material-symbols-outlined"
+                  >
+                    cancel
+                  </span>
+                </div>
+                <div className="speech-bubble" key={index}>
+                  <input
+                    type="text"
+                    value={"재료 : " + item.ingredient}
+                    style={{
+                      border: "none",
+                      backgroundColor: "transparent",
+                      textAlign: "center",
+                      fontSize: "17px",
+                    }}
+                    disabled
+                  />
+                  <input
+                    type="text"
+                    value={"양 : " + item.amount}
+                    style={{
+                      border: "none",
+                      backgroundColor: "transparent",
+                      textAlign: "center",
+                      fontSize: "17px",
+                    }}
+                    disabled
+                  />
+                </div>
               </div>
-              <div className="speech-bubble" key={index}>
-                <input
-                  type="text"
-                  value={"재료 : " + item.ingredient}
-                  style={{
-                    border: "none",
-                    backgroundColor: "transparent",
-                    textAlign: "center",
-                    fontSize: "17px",
-                  }}
-                  disabled
-                />
-                <input
-                  type="text"
-                  value={"양 : " + item.amount}
-                  style={{
-                    border: "none",
-                    backgroundColor: "transparent",
-                    textAlign: "center",
-                    fontSize: "17px",
-                  }}
-                  disabled
-                />
-              </div>
-            </div>
-          ))}
-        </IngredientBox>
-      </ResultContainer>
+            ))}
+          </IngredientBox>
+        </ResultContainer>
+      </div>
     </Container>
   );
 };

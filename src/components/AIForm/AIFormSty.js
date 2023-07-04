@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 900px;
-  height: 600px;
+  height: 670px;
   margin: 0 auto;
   background-color: white;
   justify-content: space-between;
@@ -12,11 +12,20 @@ export const Container = styled.div`
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
+  flex-direction: column;
+  .text {
+    font-size: 25px;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    color: #333333;
+  }
 `;
 
 export const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
+  border: 1px solid red;
   justify-content: center;
   width: 300px;
   height: 500px;
