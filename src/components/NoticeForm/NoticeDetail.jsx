@@ -24,14 +24,11 @@ const NoticeDetail = () => {
   const [currentLastUrl, setCurrentLastUrl] = useState(null);
   const [pageid, setPageId] = useState("");
   const [user, setUser] = useState();
-  // console.log(location.pathname);
 
   useEffect(() => {
     const url = document.location.href;
     const splitUrl = url.split("/");
     const location = splitUrl[splitUrl.length - 1];
-
-    // console.log(location);
 
     // 게시물 가져오기
     setCurrentLastUrl(location);
@@ -41,11 +38,8 @@ const NoticeDetail = () => {
           ...item,
         }));
         setBoardItem(data);
-        console.log("페이지 아이디:", location);
         setPageId(location);
         const targetItem = data.find((item) => item.id === Number(location));
-        console.log("타겟: ", targetItem);
-        console.log("주인장: ", targetItem?.username); // 수정된 부분
       });
     } catch (error) {
       console.log(error);
@@ -56,8 +50,6 @@ const NoticeDetail = () => {
       .then((response) => {
         const userData = response.data;
         setUser(userData[0].id);
-        console.log(userData);
-        console.log("유저아이디 : ", userData[0].id);
         // 유저 정보를 활용하여 원하는 작업 수행
       })
       .catch((error) => {
@@ -75,7 +67,6 @@ const NoticeDetail = () => {
           `${apiServer}/api/admin/delete/${location}`,
           { id: Number(location) }
         );
-        console.log(response);
         alert("공지 삭제 완료");
         navigate("/notice");
       } catch (error) {

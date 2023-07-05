@@ -50,8 +50,6 @@ const NavBar = () => {
       .then((response) => {
         const userData = response.data;
         setUser(userData[0].name);
-        console.log(userData);
-        console.log("유저 이름 : ", userData[0].name);
       })
       .catch((error) => {
         console.log(error);
@@ -63,13 +61,13 @@ const NavBar = () => {
   return (
     <Nav>
       <Search>
-        <input type="text" placeholder="만들고싶은 요리를 검색해보세요." />
+        {/* <input type="text" placeholder="만들고싶은 요리를 검색해보세요." />
         <button
           style={{ border: "none", backgroundColor: "transparent" }}
           className="material-icons"
         >
           search
-        </button>
+        </button> */}
       </Search>
       <NavButtons>
         <Button>

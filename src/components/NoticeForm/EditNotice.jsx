@@ -58,7 +58,6 @@ const EditNotice = () => {
   const [id, setID] = useState("");
   const location = useLocation();
   const [currentLastUrl, setCurrentLastUrl] = useState(null);
-  console.log(location.pathname);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -80,8 +79,6 @@ const EditNotice = () => {
         .then((response) => {
           const data = response.data;
           const idx = data[location - 1];
-          console.log(response.data);
-          console.log(idx);
           setID(location);
           setBoardItem(response.data);
           setSubject(idx.subject);
@@ -94,10 +91,6 @@ const EditNotice = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("작성자: ", username);
-    console.log("제목: ", subject);
-    console.log("내용: ", content);
-    console.log("날짜: ", formattedDate);
 
     if (subject === "") {
       alert("제목을 작성해주세요.");
@@ -119,7 +112,6 @@ const EditNotice = () => {
       );
       alert("질문 수정 성공");
       navigate("/q&a");
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

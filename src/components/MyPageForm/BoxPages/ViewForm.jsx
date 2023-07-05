@@ -39,7 +39,6 @@ const ViewForm = () => {
         .get(`${apiServer}/api/board/detail/${localStorage.getItem("id")}`)
         .then((response) => {
           const data = response.data;
-          console.log(data);
           setMyItem(response.data);
         });
     } catch (error) {

@@ -4,7 +4,6 @@ import { useState } from "react";
 import DetailsForm from "./BoxPages/DetailsForm";
 import ChangePwForm from "./BoxPages/ChangePwForm";
 import ViewForm from "./BoxPages/ViewForm";
-import LikeForm from "./BoxPages/LikeForm";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteForm from "./BoxPages/DeleteForm";

@@ -52,7 +52,6 @@ const AIForm = () => {
 
     setIngredient("");
     setAmount("");
-    console.log(location);
   };
 
   // handleDelete 함수 정의
@@ -66,13 +65,11 @@ const AIForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("formData: ", formData);
 
     const data = formData.reduce((acc, cur) => {
       acc[cur.ingredient.trim()] = parseInt(cur.amount.trim());
       return acc;
     }, {});
-    console.log(data);
     try {
       const response = await axios
         .post(`${apiServer}/api/ai/predict`, data)
@@ -80,8 +77,6 @@ const AIForm = () => {
           const data = response.data;
           window.location.href = `http://localhost:3000/ai/rec?result=${data}`;
         });
-      console.log(data);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

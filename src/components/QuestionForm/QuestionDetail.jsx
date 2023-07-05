@@ -57,8 +57,15 @@ const QuestionDetail = () => {
   const [user, setUser] = useState();
   const [likeCount, setLikeCount] = useState(0);
   const [boardMaster, setBoardMaster] = useState("");
-  // console.log(location.pathname);
 
+  //댓글 회원만 작성 가능
+  const onClickMy = () => {
+    if (!localStorage.getItem("id")) {
+      navigate("/login");
+      alert("로그인 후 이용가능합니다.");
+      return;
+    }
+  };
   useEffect(() => {
     const url = document.location.href;
     const splitUrl = url.split("/");
@@ -69,8 +76,6 @@ const QuestionDetail = () => {
       setLike(JSON.parse(storedLike));
     }
 
-    // console.log(location);
-
     // 게시물 가져오기
     setCurrentLastUrl(location);
     try {
@@ -79,11 +84,8 @@ const QuestionDetail = () => {
           ...item,
         }));
         setBoardItem(data);
-        console.log("페이지 아이디:", location);
         setPageId(location);
         const targetItem = data.find((item) => item.id === Number(location));
-        console.log("타겟: ", targetItem);
-        console.log("주인장: ", targetItem?.username); // 수정된 부분
         setBoardMaster(targetItem?.username);
       });
     } catch (error) {
@@ -95,8 +97,6 @@ const QuestionDetail = () => {
       .then((response) => {
         const userData = response.data;
         setUser(userData[0].id);
-        console.log(userData);
-        console.log("유저아이디 : ", userData[0].id);
         // 유저 정보를 활용하여 원하는 작업 수행
       })
       .catch((error) => {
@@ -111,7 +111,6 @@ const QuestionDetail = () => {
         )
         .then((response) => {
           const data = response.data;
-          console.log(data);
           setCommentItem(response.data);
         });
     } catch (error) {
@@ -129,7 +128,6 @@ const QuestionDetail = () => {
           `${apiServer}/api/board/delete/${location}`,
           { id: Number(location) }
         );
-        console.log(response);
         alert("질문 삭제 완료");
         navigate("/q&a");
       } catch (error) {
@@ -140,11 +138,6 @@ const QuestionDetail = () => {
   };
   const handleReply = async (e) => {
     e.preventDefault();
-    console.log("작성자: ", username);
-    console.log("댓글: ", comment);
-    console.log("날짜: ", formattedDate);
-    console.log("공개여부: ", pri);
-    console.log("페이지아이디: ", id);
 
     if (reply === "") {
       alert("댓글을 입력해주세요.");
@@ -172,39 +165,36 @@ const QuestionDetail = () => {
       alert("댓글 등록 성공");
 
       window.location.reload(false);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("작성자: ", username);
-    console.log("댓글: ", comment);
-    console.log("날짜: ", formattedDate);
-    console.log("공개여부: ", pri);
-    console.log("페이지아이디: ", pageid);
 
     // 댓글 등록
-    try {
-      const response = await axios.post(
-        `${apiServer}/api/comment/${localStorage.getItem("id")}/create`,
-        {
-          pageid,
-          username,
-          comment,
-          pri,
-          create_date,
-          parentid,
-        }
-      );
-      alert("댓글 등록 성공");
-      // setReplyTargetId(response.index);
-      // console.log(replyTargetId);
-      window.location.reload(false);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+    if (comment === "") {
+      alert("댓글을 입력해주세요.");
+      return;
+    } else {
+      try {
+        const response = await axios.post(
+          `${apiServer}/api/comment/${localStorage.getItem("id")}/create`,
+          {
+            pageid,
+            username,
+            comment,
+            pri,
+            create_date,
+            parentid,
+          }
+        );
+        alert("댓글 등록 성공");
+        // setReplyTargetId(response.index);
+        window.location.reload(false);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -235,11 +225,9 @@ const QuestionDetail = () => {
       );
       alert("댓글 삭제 성공");
       window.location.reload(false);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
-    console.log(id);
   };
 
   const handleDelete = async (e, replyid) => {
@@ -253,11 +241,9 @@ const QuestionDetail = () => {
       );
       alert("댓글 삭제 성공");
       window.location.reload(false);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
-    console.log(replyid);
   };
 
   // 대댓글
@@ -290,27 +276,29 @@ const QuestionDetail = () => {
       );
       alert("댓글 수정 성공");
       window.location.reload(false);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
-    console.log(itemid);
   };
 
   // 좋아요 기능
   const handleLike = async () => {
-    try {
-      const response = await axios.post(
-        `${apiServer}/api/board/like?user_id=${user}`,
-        { question_id: location }
-      );
-      alert("추천 성공");
-      setLike(true);
-      localStorage.setItem(`questionlike_${location}`, JSON.stringify(true));
-      setLikeCount((prevCount) => prevCount + 1);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+    if (localStorage.getItem("id")) {
+      try {
+        const response = await axios.post(
+          `${apiServer}/api/board/like?user_id=${user}`,
+          { question_id: location }
+        );
+        alert("추천 성공");
+        setLike(true);
+        localStorage.setItem(`questionlike_${location}`, JSON.stringify(true));
+        setLikeCount((prevCount) => prevCount + 1);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      alert("로그인 후 이용가능합니다.");
+      navigate("/login");
     }
   };
   // 좋아요 해제 기능
@@ -324,7 +312,6 @@ const QuestionDetail = () => {
       setLike(false);
       localStorage.setItem(`questionlike_${location}`, JSON.stringify(false));
       setLikeCount((prevCount) => prevCount - 1);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -426,7 +413,14 @@ const QuestionDetail = () => {
         >
           비공개
         </Button2>
-        <Button onClick={handleSubmit}>등록</Button>
+        <Button
+          onClick={() => {
+            handleSubmit();
+            onClickMy();
+          }}
+        >
+          등록
+        </Button>
       </InputContainer>
 
       {/* 댓글 */}

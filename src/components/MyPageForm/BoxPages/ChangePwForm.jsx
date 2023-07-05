@@ -29,9 +29,6 @@ const ChangePwForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("New Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-
     if (password !== confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
@@ -50,7 +47,6 @@ const ChangePwForm = () => {
       );
       alert("비밀번호 변경 성공");
       navigate("/");
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

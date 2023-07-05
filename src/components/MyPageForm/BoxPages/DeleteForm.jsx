@@ -32,7 +32,6 @@ const DeleteForm = () => {
               username,
             }
           );
-          console.log(response);
           localStorage.removeItem("accessToken");
           localStorage.removeItem("id");
           alert("회원탈퇴 완료");

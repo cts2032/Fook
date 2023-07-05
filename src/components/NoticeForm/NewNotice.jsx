@@ -135,7 +135,6 @@ const NewNotice = () => {
             `<img src="${imageUrl}"/>` +
             content.substring(cursorPosition)
         );
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -172,11 +171,6 @@ const NewNotice = () => {
   const handleSubmit = async (e) => {
     if (e) e.preventDefault(); // e 객체가 있을 때만 preventDefault 함수를 호출하도록 수정
 
-    console.log("작성자: ", username);
-    console.log("제목: ", subject);
-    console.log("내용: ", content);
-    console.log("날짜: ", formattedDate);
-
     if (subject === "") {
       alert("제목을 작성해주세요.");
       return;
@@ -199,7 +193,6 @@ const NewNotice = () => {
 
       alert("게시글 등록 성공");
       navigate("/notice");
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

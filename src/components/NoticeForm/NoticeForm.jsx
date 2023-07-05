@@ -8,10 +8,8 @@ import axios from "axios";
 import apiServer from "../../api/api";
 import { useEffect } from "react";
 import styled from "styled-components";
-import { PageBox } from "../BestRecipeForm/BestRecipeSty";
 import Paging from "../Paging/Paging";
 import { PageContainer } from "../QuestionForm/QuestionFormSty";
-// import ReactPaginate from "react-paginate";
 
 export const Detail = styled(Link)`
   text-decoration-line: none;
@@ -32,7 +30,6 @@ const NoticeForm = () => {
     try {
       axios.get(`${apiServer}/api/admin/getboard`).then((response) => {
         const data = response.data;
-        console.log(data);
         setBoardItem(response.data);
       });
     } catch (error) {
@@ -43,7 +40,6 @@ const NoticeForm = () => {
       .get(`${apiServer}/api/user/get_id/${localStorage.getItem("id")}`)
       .then((response) => {
         const userData = response.data;
-        console.log("유저아이디 : ", userData[0].id);
       })
       .catch((error) => {
         console.log(error);

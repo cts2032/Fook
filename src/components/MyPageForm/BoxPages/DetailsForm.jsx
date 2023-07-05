@@ -14,11 +14,6 @@ const DetailsForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("id:", username);
-    console.log("name:", name);
-    console.log("email:", email);
-    console.log("phone:", phonenumber);
-    console.log("birth:", birth);
 
     const updateUser = { name, birth, email, phonenumber };
     try {
@@ -29,7 +24,6 @@ const DetailsForm = () => {
       );
       alert("수정 성공");
       Navigate("/mypage");
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

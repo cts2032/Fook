@@ -23,7 +23,6 @@ const HomeForm = () => {
       axios.get(`${apiServer}/api/admin/getboard`).then((response) => {
         const data = response.data;
         setBoardItem(data);
-        console.log(boarditem);
       });
     } catch (error) {
       console.log(error);

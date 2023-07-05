@@ -35,7 +35,6 @@ const LoginForm = () => {
           },
           { headers }
         );
-        console.log(response);
         alert("로그인 성공");
         localStorage.setItem("id", response.data.username);
         const token = response.data.access_token;

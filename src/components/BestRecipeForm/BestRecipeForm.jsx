@@ -44,29 +44,21 @@ const BestRecipeForm = () => {
     try {
       axios.get(`${apiServer}/api/recipe/getboard`).then((response) => {
         const data = response.data;
-        console.log(data);
         setBoardItem(response.data);
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     // 유저정보 가져오기
     axios
       .get(`${apiServer}/api/user/get_id/${localStorage.getItem("id")}`)
       .then((response) => {
         const userData = response.data;
-        console.log("유저아이디 : ", userData[0].id);
 
         try {
           axios
             .get(`${apiServer}/likes?user_id=${userData[0].id}`)
             .then((response) => {
               // 요청에 대한 처리 로직 추가
-              console.log(response.data);
               const Recipelikes = response.data;
-              console.log(
-                "좋아요 한 레시피게시물: " + Recipelikes.recipe_likes
-              );
               Recipelikes.recipe_likes.forEach((like) => {
                 localStorage.setItem(
                   `recipelike_${like}`,
@@ -75,10 +67,10 @@ const BestRecipeForm = () => {
               });
             })
             .catch((error) => {
-              console.error(error);
+              console.log(error);
             });
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
       })
       .catch((error) => {

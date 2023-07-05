@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import apiServer from "../../../api/api";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 export const ViewContainer = styled.div`
   width: 900px;
@@ -76,7 +75,6 @@ export const LikeContainer = styled.div`
 `;
 
 const MyDetail = () => {
-  // const { id } = useParams();
   const [myitem, setMyItem] = useState([]);
 
   useEffect(() => {
@@ -85,7 +83,6 @@ const MyDetail = () => {
         .get(`${apiServer}/api/board/detail/${localStorage.getItem("id")}`)
         .then((response) => {
           const data = response.data;
-          console.log(data);
           setMyItem(response.data);
         });
     } catch (error) {

@@ -38,7 +38,6 @@ function App() {
         <Route path="/best/detail/:idx" element={<PostDetail />} />
         <Route path="/best/newpost" element={<NewPost />} />
         <Route path="/best" element={<BestRecipeForm />} />
-        {/* <Route path="/mypage/:name/detail" element={<MyDetail />} /> */}
         <Route path="/mypage/:name/detail/:idx" element={<QuestionDetail />} />
         <Route path="/mypage/:name" element={<MyPageForm />} />
         <Route path="/signup" element={<RegisterForm />} />

@@ -26,7 +26,6 @@ const SimpleSlider = () => {
     try {
       axios.get(`${apiServer}/api/recipe/getboard`).then((response) => {
         const data = response.data;
-        console.log(data);
         setBoardItem(response.data);
       });
     } catch (error) {
