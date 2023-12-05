@@ -11,10 +11,7 @@ router = APIRouter(
     prefix="/api/image",
 )
 
-S3_BUCKET_NAME = "fookbucket"
-S3_ACCESS_KEY = "AKIAZ54AIJIZZGJ6OBFV"
-S3_SECRET_KET = "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"
-S3_REGION = "ap-northeast-2"
+
 
 
 s3_client = boto3.client(
